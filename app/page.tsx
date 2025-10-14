@@ -1,493 +1,714 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import AnimatedSection from './components/AnimatedSection';
-import GlassCard from './components/GlassCard';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-6">
-        {/* Animated background */}
-        <div className="absolute inset-0 -z-10">
-          <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-party-purple rounded-full mix-blend-multiply filter blur-xl opacity-20"
-            animate={{
-              scale: [1, 1.2, 1],
-              x: [0, 50, 0],
-              y: [0, 30, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute top-40 right-10 w-72 h-72 bg-party-pink rounded-full mix-blend-multiply filter blur-xl opacity-20"
-            animate={{
-              scale: [1, 1.3, 1],
-              x: [0, -30, 0],
-              y: [0, 50, 0],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute -bottom-20 left-1/2 w-72 h-72 bg-party-orange rounded-full mix-blend-multiply filter blur-xl opacity-20"
-            animate={{
-              scale: [1, 1.4, 1],
-              x: [0, -50, 0],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </div>
+    <main className="min-h-screen bg-background">
+      {/* Hero */}
+      <section className="min-h-screen flex items-center justify-center px-6 py-20 relative overflow-hidden">
+        {/* Animated gradient orb */}
+        <motion.div
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-accent-from/20 via-accent-via/10 to-accent-to/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.3, 0.2]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-        <div className="text-center max-w-5xl">
-          <motion.h1
-            className="text-6xl md:text-8xl font-bold mb-6 gradient-text"
-            initial={{ opacity: 0, y: -50 }}
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
+            className="text-sm uppercase tracking-widest text-accent-via font-semibold mb-6"
+          >
+            28 Mars 2025
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="font-serif text-5xl md:text-7xl font-bold mb-8 gradient-text"
           >
             Bonjour à tous
           </motion.h1>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="prose prose-lg mx-auto"
           >
-            <GlassCard className="text-xl md:text-2xl leading-relaxed">
-              <span className="text-5xl mb-4 block">🎉</span>
-              <p className="font-semibold">
-                On est très heureux de vous inviter à célébrer notre anniversaire commun
-                le week-end du <span className="gradient-text font-bold">28 mars</span>, dans un lieu privatisé à l&apos;occasion ! On a vu les
-                choses très grand pour que ce week-end soit inoubliable et que tout le
-                monde se régale !!!
-              </p>
-            </GlassCard>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="mt-8"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-4xl"
-            >
-              ↓
-            </motion.div>
+            <p className="text-xl leading-relaxed text-gray-700">
+              On est très heureux de vous inviter à célébrer notre anniversaire commun
+              le week-end du <strong>28 mars</strong>, dans un lieu privatisé à l&apos;occasion ! On a vu les
+              choses très grand pour que ce week-end soit inoubliable et que tout le
+              monde se régale !!!
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Le Domaine */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            🏞️ Le domaine
-          </h2>
-          <GlassCard className="text-lg md:text-xl leading-relaxed">
-            <p>
-              À seulement 1h30 de Paris, on vous invite dans un lieu de rêve, privatisé rien que pour nous :
-              un grand domaine façon village de vacances, avec tout ce qu&apos;il faut pour faire la fête, faire du sport,
-              manger, danser, boire et quelques surprises… on a tout prévu pour que ce week-end soit{' '}
-              <span className="gradient-text font-bold text-2xl">INCROYABLE</span>
-            </p>
-          </GlassCard>
+      {/* Le domaine */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 relative overflow-hidden">
+        {/* Purple gradient orb */}
+        <motion.div
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-accent-purple/15 via-accent-via/10 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.15, 0.25, 0.15]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Le domaine
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                À seulement 1h30 de Paris, on vous invite dans un lieu de rêve, privatisé rien que pour nous :
+                un grand domaine façon village de vacances, avec tout ce qu&apos;il faut pour faire la fête, faire du sport,
+                manger, danser, boire et quelques surprises… on a tout prévu pour que ce week-end soit <strong>INCROYABLE</strong>
+              </p>
+            </motion.div>
+            <motion.div
+              className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Image
+                src="/domaine.png"
+                alt="Le domaine"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+          </div>
         </div>
       </AnimatedSection>
 
       {/* Hébergement */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            🏡 Pour bien dormir
-          </h2>
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 bg-gray-50 overflow-hidden">
+        <div className="max-w-6xl mx-auto w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-8 text-gray-900 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Pour bien dormir
+          </motion.h2>
 
-          <GlassCard className="text-lg md:text-xl leading-relaxed mb-8">
-            <span className="text-5xl mb-4 block">🏰</span>
-            <p className="font-semibold">
-              On aura la chance de profiter de <span className="gradient-text">15 chalets tout confort</span>,
-              pouvant accueillir jusqu&apos;à 62 personnes, avec un lit individuel réservé pour chaque invité
-              (donc pas de matelas gonflable ni de bataille pour le canapé).
-            </p>
-          </GlassCard>
-
-          <div className="mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold mb-6 text-center">Voici la répartition :</h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              <GlassCard>
-                <h4 className="text-xl font-bold mb-4 text-party-orange">Grands chalets partagés</h4>
-                <p className="text-lg">
-                  <span className="font-bold">3 grands chalets</span> pour 15, 15 et 8 personnes,
-                  avec plusieurs chambres, dortoirs, séjours, salles de bain, terrasses…
-                  de quoi loger confortablement en mode coloc&apos; de week-end.
-                </p>
-              </GlassCard>
-
-              <GlassCard>
-                <h4 className="text-xl font-bold mb-4 text-party-pink">Chalets duo</h4>
-                <p className="text-lg">
-                  <span className="font-bold">12 chalets duo</span> pour 2 personnes chacun,
-                  avec lit individuel, salle de bain et terrasse pour un peu plus d&apos;intimité
-                </p>
-              </GlassCard>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <GlassCard className="border-l-4 border-party-orange">
-              <p className="text-lg">
-                🧡 <span className="font-bold">Priorité aux couples pour les chalets duo</span> :
-                si vous venez en couple et souhaitez dormir ensemble, on fera le maximum pour vous réserver un de ces chalets.
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-sm space-y-6"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-base text-gray-700">
+                On aura la chance de profiter de <strong>15 chalets tout confort</strong>, pouvant accueillir jusqu&apos;à 62 personnes,
+                avec un lit individuel réservé pour chaque invité.
               </p>
-            </GlassCard>
 
-            <GlassCard className="border-l-4 border-party-pink">
-              <p className="text-lg">
-                ⚠️ En revanche, s&apos;il y a plus de 12 couples, certains devront partager un grand chalet –
-                mais toujours avec un lit à soi. Bref, <span className="font-bold">personne ne dormira par terre</span>,
-                et on a tout organisé pour que tout le monde soit à l&apos;aise tout le week-end !
-              </p>
-            </GlassCard>
+              <div className="space-y-4">
+                <div className="border-l-4 border-accent-from pl-4">
+                  <h4 className="font-semibold text-sm mb-1 text-accent-from">Grands chalets partagés</h4>
+                  <p className="text-sm text-gray-700">
+                    <strong>3 grands chalets</strong> pour 15, 15 et 8 personnes
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-accent-via pl-4">
+                  <h4 className="font-semibold text-sm mb-1 text-accent-via">Chalets duo</h4>
+                  <p className="text-sm text-gray-700">
+                    <strong>12 chalets duo</strong> pour 2 personnes chacun
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-4 space-y-2 text-sm">
+                <p className="text-gray-700">
+                  🧡 <strong>Priorité aux couples pour les chalets duo</strong>
+                </p>
+                <p className="text-gray-700">
+                  ⚠️ <strong>Personne ne dormira par terre</strong> !
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Image
+                src="/chalets.png"
+                alt="Les chalets"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
           </div>
         </div>
       </AnimatedSection>
 
-      {/* Plan du domaine */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <GlassCard className="text-center">
-            <span className="text-5xl mb-4 block">🪧</span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
-              Plan du domaine de 4,5 hectares
-            </h2>
-            <p className="text-gray-400 text-sm">(Plan à venir)</p>
-          </GlassCard>
+      {/* Plan */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 relative overflow-hidden">
+        {/* Orange gradient orb */}
+        <motion.div
+          className="absolute top-1/2 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-accent-from/20 via-accent-to/10 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.15, 1],
+            x: [0, -20, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-6xl mx-auto text-center relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Plan du domaine
+          </motion.h2>
+          <motion.p
+            className="text-lg text-gray-600 mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            4,5 hectares privatisés
+          </motion.p>
+
+          <motion.div
+            className="bg-gray-50 rounded-2xl p-8 relative h-[600px]"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Image
+              src="/plan-domaine.png"
+              alt="Plan du domaine"
+              fill
+              className="object-contain p-4"
+              sizes="100vw"
+            />
+          </motion.div>
         </div>
       </AnimatedSection>
 
       {/* Activités */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-12 gradient-text text-center">
-            🎮 Ce qu&apos;il y a à faire…
-          </h2>
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 bg-gray-50 relative overflow-hidden">
+        {/* Amber gradient orb */}
+        <motion.div
+          className="absolute top-0 left-1/4 w-[450px] h-[450px] bg-gradient-to-br from-accent-via/15 via-accent-to/8 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            y: [0, 30, 0]
+          }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-8 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Ce qu&apos;il y a à faire…
+          </motion.h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-            {[
-              { icon: '💦', label: 'Piscine' },
-              { icon: '⛹️', label: 'Foot' },
-              { icon: '🏐', label: 'Volley' },
-              { icon: '🏀', label: 'Basket' },
-              { icon: '⛳', label: 'Pétanque' },
-              { icon: '🏓', label: 'Ping-pong' },
-              { icon: '🎮', label: 'Bornes d\'arcade' },
-              { icon: '🎲', label: 'Jeux de société' },
-              { icon: '⚽', label: 'Babyfoot' },
-              { icon: '🎁', label: 'Surprises…' },
-            ].map((activity, index) => (
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Image
+                src="/activites.png"
+                alt="Activités"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                'Piscine',
+                'Foot',
+                'Volley',
+                'Basket',
+                'Pétanque',
+                'Ping-pong',
+                'Bornes d\'arcade',
+                'Jeux de société',
+                'Babyfoot',
+                'Surprises…',
+              ].map((activity, index) => (
+                <motion.div
+                  key={activity}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="bg-white rounded-xl p-4 text-center shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <p className="text-sm font-medium text-gray-700">{activity}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Bouffe */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 relative overflow-hidden">
+        {/* Orange gradient orb */}
+        <motion.div
+          className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-accent-from/18 via-accent-via/10 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.18, 0.25, 0.18]
+          }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-4xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Bouffe
+          </motion.h2>
+
+          <div className="space-y-6">
+            <motion.p
+              className="text-base text-gray-700 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              Comme vous pouvez l&apos;imaginer, nourrir 60 personnes c&apos;est très galère. Pour profiter ensemble :
+            </motion.p>
+
+            <motion.div
+              className="gradient-accent rounded-2xl p-6 text-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <p className="font-serif text-2xl md:text-3xl font-bold text-white">
+                MAXI salades de pâtes maison !
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="bg-gray-50 rounded-xl p-6 space-y-3 text-sm"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <p className="font-semibold text-gray-900">
+                🚨 Repas officiel offert par nos soins
+              </p>
+              <p className="text-gray-700">
+                Mais vous êtes libres de ramener votre propre repas. <strong>Ce serait plus cool qu&apos;on mange tous ensemble 😄</strong>
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="bg-gray-50 rounded-xl p-6 space-y-2 text-sm"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <p className="text-gray-700">
+                <strong>🪧 Vendredi soir</strong> : repas / apéro dînatoire. Chacun apporte quelque chose à partager.
+              </p>
+              <p className="text-xs text-gray-600">
+                Quiches, cakes, tartes, saucisson, guacamole, fruits, gâteaux...
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="border-l-4 border-accent-from pl-4 py-2 text-sm"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
+              <p className="text-gray-700">
+                ⚠️ Allergie alimentaire ? Prévenez Maxence ou Younes au plus vite.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* A boire */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 bg-gray-50 relative overflow-hidden">
+        {/* Purple-amber gradient orb */}
+        <motion.div
+          className="absolute bottom-0 left-0 w-[520px] h-[520px] bg-gradient-to-tr from-accent-purple/12 via-accent-from/8 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, 90, 0]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-8 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            A boire !
+          </motion.h2>
+
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              className="gradient-accent rounded-2xl p-8 text-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <p className="font-serif text-2xl md:text-3xl font-bold text-white">
+                L&apos;ALCOOL SERA EN ILLIMITÉ<br />TOUT LE WEEK-END ! 🍾
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-2 gap-4">
               <motion.div
-                key={activity.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                className="bg-white rounded-xl p-6 shadow-sm space-y-2"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ delay: 0.1 }}
               >
-                <GlassCard className="text-center h-full flex flex-col items-center justify-center">
-                  <span className="text-4xl md:text-5xl mb-2">{activity.icon}</span>
-                  <p className="text-sm md:text-base font-semibold">{activity.label}</p>
-                </GlassCard>
+                <h3 className="font-semibold text-base mb-3">Alcools</h3>
+                <p className="text-sm text-gray-700">🍺 60L de bière</p>
+                <p className="text-sm text-gray-700">🍷 Vin</p>
+                <p className="text-sm text-gray-700">🥃 Vodka, rhum, gin...</p>
+                <p className="text-sm text-gray-700">🥂 Champagne</p>
+              </motion.div>
+
+              <motion.div
+                className="bg-white rounded-xl p-6 shadow-sm space-y-2"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <h3 className="font-semibold text-base mb-3">Softs</h3>
+                <p className="text-sm text-gray-700">🥤 Crazy, Coca, Oasis, Orangina...</p>
+                <p className="text-xs text-gray-600 mt-2">💦 Eau du robinet disponible</p>
+              </motion.div>
+
+              <motion.div
+                className="col-span-2 relative h-[200px] rounded-xl overflow-hidden shadow-lg"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <Image
+                  src="/bar.png"
+                  alt="Bar"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Valise */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 relative overflow-hidden">
+        {/* Amber gradient orb */}
+        <motion.div
+          className="absolute top-1/3 right-0 w-[480px] h-[480px] bg-gradient-to-bl from-accent-via/16 via-accent-to/9 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.15, 1],
+            x: [0, -30, 0]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-4xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-8 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Dans ma valise j&apos;ai…
+          </motion.h2>
+
+          <div className="space-y-6">
+            {[
+              { emoji: '👔', title: 'Samedi soir : tenue correcte exigée', desc: 'Robe ou chemise conseillée, mais soyez à l\'aise avant tout.' },
+              { emoji: '⚽', title: 'Tenue de sport', desc: 'Si vous comptez faire du foot ou d\'autres activités sportives.' },
+              { emoji: '🏊', title: 'Maillot de bain', desc: 'La piscine chauffée sera accessible si le temps le permet.' }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-gray-50 rounded-xl p-6"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ x: 10 }}
+              >
+                <p className="text-gray-700">
+                  <span className="text-2xl mr-3">{item.emoji}</span>
+                  <strong>{item.title}</strong> : {item.desc}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </AnimatedSection>
 
-      {/* Food */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            🍽 Bouffe
-          </h2>
-
-          <GlassCard className="text-lg leading-relaxed mb-6">
-            <p className="mb-6">
-              Comme vous pouvez l&apos;imaginer, <span className="font-bold">nourrir 60 personnes</span> de façon simple,
-              bonne et pas trop chère, c&apos;est très galère. Pour éviter de passer notre week-end dans la cuisine
-              et passer un max de temps à <span className="font-bold">profiter ensemble</span>, on a opté pour une solution efficace :
-            </p>
-            <h3 className="text-3xl md:text-4xl font-bold gradient-text text-center mb-4">
-              MAXI salades de pâtes maison !
-            </h3>
-          </GlassCard>
-
-          <GlassCard className="border-l-4 border-party-pink mb-6">
-            <p className="text-xl font-bold mb-2">🚨 Ce sera donc le repas officiel proposé, offert par nos soins.</p>
-            <p className="text-lg">
-              L&apos;idée, c&apos;est de faire <span className="font-bold">simple</span>, convivial, et de pouvoir manger dans la grande salle tous ensemble.
-              Bien sûr, si vous préférez autre chose, <span className="font-bold">vous êtes libres de ramener votre propre repas</span> ou
-              d&apos;aller en chercher dans les environs. Mais bon, ça serait quand même plus cool qu&apos;on mange tous ensemble en plus c&apos;est gratuit 😄
-            </p>
-          </GlassCard>
-
-          <GlassCard className="border-l-4 border-party-blue mb-6">
-            <p className="text-lg mb-2">
-              <span className="font-bold">🪧 A noter</span> : Pour notre premier repas ensemble, le vendredi soir,
-              on vous propose un <span className="font-bold">repas / apéro dînatoire</span>.
-            </p>
-            <p className="text-lg mb-4">
-              L&apos;idée, c&apos;est que chacun apporte quelque chose à partager. Faites au plus simple, que ce soit fait maison ou acheté.
-            </p>
-            <p className="text-base text-gray-300">
-              Des idées comme ça : quiches, cakes, tartes, saucisson, salade, guacamole, pâté, tomates cerises, chips, fruits, gâteaux…
-              (on compte sur vous pour éviter l&apos;armée de chips ✌️).
-            </p>
-          </GlassCard>
-
-          <GlassCard className="border-l-4 border-party-orange bg-party-orange/10">
-            <p className="text-lg">
-              ⚠️ Si vous avez une allergie alimentaire ou si vous savez à l&apos;avance que vous ne mangerez pas de salade de pâtes,
-              merci de le dire au plus vite à Maxence ou Younes, pour qu&apos;on puisse s&apos;organiser au mieux côté logistique.
-            </p>
-          </GlassCard>
-        </div>
-      </AnimatedSection>
-
-      {/* Drinks */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            🍻 A boire !
-          </h2>
-
-          <motion.div
-            initial={{ scale: 0.9 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <GlassCard className="bg-gradient-to-r from-party-purple/20 to-party-pink/20 border-2 border-party-pink mb-8">
-              <h3 className="text-4xl md:text-5xl font-bold text-center mb-4">
-                L&apos;ALCOOL SERA EN ILLIMITÉ TOUT LE WEEK-END ! 🍾
-              </h3>
-            </GlassCard>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <GlassCard>
-              <h4 className="text-2xl font-bold mb-4 gradient-text">Alcools</h4>
-              <ul className="space-y-2 text-lg">
-                <li>🍺 60L de bière</li>
-                <li>🍷 Vin rouge & blanc</li>
-                <li>🥃 Vodka, rhum, gin, JET 27, Jäger…</li>
-                <li>🥂 Champagne</li>
-              </ul>
-            </GlassCard>
-
-            <GlassCard>
-              <h4 className="text-2xl font-bold mb-4 gradient-text">Softs</h4>
-              <p className="text-lg mb-4">
-                🥤 Crazy, Coca, Oasis, Orangina, Ice Tea, Fanta etc…
-              </p>
-              <p className="text-base text-gray-400">
-                💦 Pour ce qui est de l&apos;eau, on n&apos;en a pas prévu (après il y a le robinet)
-              </p>
-            </GlassCard>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Dress Code */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            👗 Dans ma valise j&apos;ai…
-          </h2>
-
-          <div className="space-y-6">
-            <GlassCard className="border-l-4 border-party-purple">
-              <h3 className="text-2xl font-bold mb-4">Soirée du samedi</h3>
-              <p className="text-lg">
-                Pour la soirée du samedi, c&apos;est <span className="font-bold">tenue correct exigé</span>.
-                Néanmoins, l&apos;important est que vous vous sentiez à l&apos;aise, et la seule obligation est de vous habiller de manière élégante.
-                Si le cœur vous en dit, une robe ou une chemise serait un excellent choix pour l&apos;occasion.
-              </p>
-            </GlassCard>
-
-            <GlassCard>
-              <p className="text-lg">
-                Pensez à prendre une <span className="font-bold">tenue de sport</span> si vous comptez en faire
-                (on pense notamment a ceux qui veulent faire du foot).
-              </p>
-            </GlassCard>
-
-            <GlassCard>
-              <p className="text-lg">
-                Enfin, si le temps le permet, la piscine chauffée sera accessible. Pensez donc à glisser un{' '}
-                <span className="font-bold">maillot de bain</span> dans votre valise, au cas où.
-              </p>
-            </GlassCard>
-          </div>
-        </div>
-      </AnimatedSection>
-
       {/* Transport */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            🚗 Transport
-          </h2>
-
-          <div className="space-y-6">
-            <GlassCard className="text-lg">
-              <p>
-                Le village se trouve à environ <span className="font-bold">1h30 de route au sud de Paris</span>.
-                Le plus simple, c&apos;est donc de venir en voiture.
-              </p>
-            </GlassCard>
-
-            <GlassCard className="border-l-4 border-party-blue">
-              <p className="text-lg">
-                🧩 On vous laisse vous organiser entre vous pour les groupes de voiture :
-                pensez à en parler assez vite pour savoir qui part avec qui !
-              </p>
-            </GlassCard>
-
-            <GlassCard className="bg-party-purple/10 border-2 border-party-purple">
-              <span className="text-5xl mb-4 block">🅿️</span>
-              <p className="text-lg mb-2">
-                Une fois sur place, pas de galère on a un grand <span className="font-bold">parking privé</span>,
-                juste à côté des chalets.
-              </p>
-              <p className="text-lg">
-                👉 Il y a donc pas de stationnement à payer, et vos voitures seront en sécurité tout le week-end.
-              </p>
-            </GlassCard>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Les Règles */}
-      <AnimatedSection className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            ⚖️ Les rappels logiques (mais importants)
-          </h2>
-
-          <p className="text-xl text-center mb-8">
-            On part du principe que tout le monde est grand et responsable de soi.
-            Donc, quelques règles simples :
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <GlassCard className="border-l-4 border-party-orange">
-              <h3 className="text-2xl font-bold mb-2">⚠ Tu casses → tu payes</h3>
-              <p className="text-lg">
-                Ce serait con que vous ayez à repayer une porte ou un baby-foot, alors
-                👉 on fait gaffe. Et en cas de casse, prévenez tout de suite Younes ou Maxence.
-              </p>
-            </GlassCard>
-
-            <GlassCard className="border-l-4 border-party-pink">
-              <h3 className="text-2xl font-bold mb-2">🤢 On est là pour faire la fête, pas pour repeindre les murs.</h3>
-              <p className="text-lg">
-                On évite de vomir partout, c&apos;est mieux pour tout le monde
-              </p>
-            </GlassCard>
-
-            <GlassCard className="border-l-4 border-party-blue">
-              <h3 className="text-2xl font-bold mb-2">🤝 Mélangez-vous !</h3>
-              <p className="text-lg">
-                Tout le monde ne se connaît pas → soyez ouverts et mélangez-vous.
-                On veut que de la bonne humeur et de la bonne ambiance.
-              </p>
-            </GlassCard>
-
-            <GlassCard className="border-l-4 border-party-purple">
-              <h3 className="text-2xl font-bold mb-2">🕺 Amusez-vous (obligatoire)</h3>
-              <p className="text-lg">
-                Pas de place pour les endormis ou les blasés → ce week-end est fait pour kiffer à fond.
-              </p>
-            </GlassCard>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* Pricing */}
-      <AnimatedSection className="py-20 px-6 pb-32">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 gradient-text text-center">
-            📜 Le prix
-          </h2>
-
-          <GlassCard className="text-lg leading-relaxed mb-8">
-            <span className="text-5xl mb-4 block">💰</span>
-            <p className="text-xl mb-6">
-              Pour que cet événement ait lieu dans ce lieu de rêve, avec tout ce qu&apos;il faut pour manger,
-              boire et faire la fête, on a besoin que chacun mette un petit coup de pouce.
-            </p>
-          </GlassCard>
-
-          <motion.div
-            initial={{ scale: 0.9 }}
-            whileInView={{ scale: 1 }}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 bg-gray-50 relative overflow-hidden">
+        {/* Orange-purple gradient orb */}
+        <motion.div
+          className="absolute top-0 right-1/3 w-[500px] h-[500px] bg-gradient-to-br from-accent-from/14 via-accent-purple/10 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            y: [0, 40, 0]
+          }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-8 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
           >
-            <GlassCard className="bg-gradient-to-br from-party-orange/20 via-party-pink/20 to-party-purple/20 border-2 border-party-pink text-center mb-8">
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                Le tarif est de <span className="text-5xl md:text-6xl gradient-text block my-4">70€</span> PAR PERSONNE
-              </h3>
-              <p className="text-xl">pour tout le week-end.</p>
-            </GlassCard>
-          </motion.div>
+            Transport
+          </motion.h2>
 
-          <GlassCard className="mb-8">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">Ça comprend :</h3>
-            <ul className="space-y-3 text-lg">
-              <li>✅ 2 nuits sur place</li>
-              <li>✅ Tous les repas principaux</li>
-              <li className="text-xl font-bold text-party-pink">✅ L&apos;ALCOOL EN ILLIMITÉ TOUT LE WEEK-END</li>
-              <li>✅ Un cadre unique et entièrement privatisé</li>
-              <li>✅ Et surtout : un week-end, on l&apos;espère inoubliable</li>
-            </ul>
-          </GlassCard>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-base text-gray-700">
+                Le village se trouve à environ <strong>1h30 de route au sud de Paris</strong>. Le plus simple : venir en voiture.
+              </p>
 
-          <motion.div
-            className="text-center text-2xl md:text-3xl leading-relaxed"
+              <p className="text-sm text-gray-700">
+                🧩 Organisez-vous entre vous pour les groupes de voiture !
+              </p>
+
+              <motion.div
+                className="bg-gradient-to-br from-accent-from/10 to-accent-via/10 rounded-xl p-6 space-y-2 border border-accent-from/20"
+                whileHover={{ scale: 1.02 }}
+              >
+                <p className="text-sm text-gray-700">
+                  🅿️ Grand <strong>parking privé</strong> juste à côté des chalets
+                </p>
+                <p className="text-sm text-gray-700">
+                  👉 Pas de stationnement à payer, voitures en sécurité
+                </p>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <Image
+                src="/parking.png"
+                alt="Parking"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Règles */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 relative overflow-hidden">
+        {/* Purple gradient orb */}
+        <motion.div
+          className="absolute bottom-0 left-1/4 w-[550px] h-[550px] bg-gradient-to-tr from-accent-purple/14 via-accent-via/8 to-transparent rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, -45, 0]
+          }}
+          transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-4xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Les rappels logiques<br />(mais importants)
+          </motion.h2>
+
+          <motion.p
+            className="text-base text-gray-700 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
+            transition={{ delay: 0.1 }}
           >
-            <p>
-              Franchement, on ne fait pas ça tous les ans, c&apos;est peut-être même une fois dans une vie, alors on
-              espère que vous serez au rendez-vous{' '}
-              <motion.span
-                className="inline-block"
-                animate={{ rotate: [0, 20, -20, 0] }}
-                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
+            Quelques règles simples :
+          </motion.p>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              { icon: '⚠', title: 'Tu casses → tu payes', desc: 'Faites gaffe. En cas de casse, prévenez Younes ou Maxence.' },
+              { icon: '🤢', title: 'Pas de déco murale', desc: 'On évite de vomir partout, merci.' },
+              { icon: '🤝', title: 'Mélangez-vous !', desc: 'Soyez ouverts. On veut de la bonne humeur.' },
+              { icon: '🕺', title: 'Amusez-vous (obligatoire)', desc: 'Pas de place pour les blasés. Kiffez à fond !' }
+            ].map((rule, index) => (
+              <motion.div
+                key={index}
+                className="bg-gray-50 rounded-xl p-6"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
               >
-                🔥
-              </motion.span>
-            </p>
+                <h3 className="font-semibold text-base mb-2">
+                  {rule.icon} {rule.title}
+                </h3>
+                <p className="text-sm text-gray-700">{rule.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Prix */}
+      <AnimatedSection className="min-h-screen max-h-screen flex items-center px-6 pb-20 bg-gray-50 relative overflow-hidden">
+        {/* Large orange-amber gradient orb */}
+        <motion.div
+          className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-gradient-to-br from-accent-from/20 via-accent-via/12 to-accent-to/8 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.3, 0.2]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="max-w-4xl mx-auto relative z-10 w-full">
+          <motion.h2
+            className="font-serif text-4xl md:text-5xl font-bold mb-6 text-gray-900"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Le prix
+          </motion.h2>
+
+          <motion.p
+            className="text-base text-gray-700 mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            Pour que cet événement ait lieu, on a besoin que chacun mette un petit coup de pouce.
+          </motion.p>
+
+          <motion.div
+            className="bg-white rounded-2xl p-10 shadow-lg text-center mb-8 relative overflow-hidden"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-accent-from/5 via-accent-via/5 to-accent-to/5" />
+            <div className="relative z-10">
+              <p className="text-xs uppercase tracking-widest text-accent-via mb-3">Le tarif est de</p>
+              <p className="font-serif text-6xl font-bold gradient-text mb-3">70€</p>
+              <p className="text-lg font-semibold text-gray-900">PAR PERSONNE</p>
+              <p className="text-sm text-gray-600 mt-1">pour tout le week-end.</p>
+            </div>
           </motion.div>
+
+          <motion.div
+            className="bg-white rounded-xl p-6 shadow-sm mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <h3 className="text-lg font-semibold mb-4">Ça comprend :</h3>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li>✅ 2 nuits sur place</li>
+              <li>✅ Tous les repas principaux</li>
+              <li className="font-bold">✅ L&apos;ALCOOL EN ILLIMITÉ</li>
+              <li>✅ Un cadre unique et privatisé</li>
+              <li>✅ Un week-end inoubliable</li>
+            </ul>
+          </motion.div>
+
+          <motion.p
+            className="text-base text-center text-gray-700 leading-relaxed"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            On ne fait pas ça tous les ans, c&apos;est peut-être une fois dans une vie, alors on espère que vous serez au rendez-vous 🔥
+          </motion.p>
         </div>
       </AnimatedSection>
     </main>

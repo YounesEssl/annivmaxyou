@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --party-orange: #ff6b35;
-  --party-pink: #f72585;
-  --party-purple: #7209b7;
-  --party-blue: #4361ee;
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --accent-from: #f97316;
+  --accent-via: #f59e0b;
+  --accent-to: #fb923c;
+  --accent-purple: #a855f7;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-party-orange: var(--party-orange);
-  --color-party-pink: var(--party-pink);
-  --color-party-purple: var(--party-purple);
-  --color-party-blue: var(--party-blue);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent-from: var(--accent-from);
+  --color-accent-via: var(--accent-via);
+  --color-accent-to: var(--accent-to);
+  --color-accent-purple: var(--accent-purple);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
 }
 
 html {
@@ -27,19 +27,21 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
 
+.font-serif {
+  font-family: var(--font-playfair), serif;
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent-from), var(--accent-via), var(--accent-to));
+}
+
 .gradient-text {
-  background: linear-gradient(135deg, var(--party-orange), var(--party-pink), var(--party-purple));
+  background: linear-gradient(135deg, var(--accent-from), var(--accent-via), var(--accent-to));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
