@@ -4,16 +4,18 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useIsMobile } from '@/app/hooks/useIsMobile';
 
+const BASE_TEXT = "Vous êtes invités à célébrer un moment ";
+const WORDS = ["unique...", "inoubliable...", "immanquable..."];
+
 export default function HeroSection() {
   const [showCursor, setShowCursor] = useState(true);
-  const [currentText, setCurrentText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
   const [showButton, setShowButton] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const isMobile = useIsMobile();
 
-  const fullText = "Vous êtes invités à célébrer un moment unique...";
-  const typingSpeed = isMobile ? 60 : 80;
+  const typingSpeed = isMobile ? 50 : 70;
+  const erasingSpeed = isMobile ? 40 : 60;
 
   // Générer les particules une seule fois - réduit sur mobile
   const particles = useMemo(() => {
@@ -39,21 +41,65 @@ export default function HeroSection() {
     return () => clearInterval(cursorInterval);
   }, []);
 
-  // Animation typewriter
+  // Animation typewriter simple
   useEffect(() => {
-    if (currentIndex < fullText.length) {
-      const timeout = setTimeout(() => {
-        setCurrentText((prev) => prev + fullText[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, typingSpeed);
-      return () => clearTimeout(timeout);
-    } else {
-      const buttonTimeout = setTimeout(() => {
-        setShowButton(true);
-      }, isMobile ? 400 : 800);
-      return () => clearTimeout(buttonTimeout);
-    }
-  }, [currentIndex, fullText, typingSpeed, isMobile]);
+    if (!isMounted) return;
+
+    let currentWordIndex = 0;
+    let currentCharIndex = 0;
+    let isErasing = false;
+
+    // Fonction pour trouver le préfixe commun entre deux mots
+    const getCommonPrefix = (word1: string, word2: string) => {
+      let i = 0;
+      while (i < word1.length && i < word2.length && word1[i] === word2[i]) {
+        i++;
+      }
+      return i;
+    };
+
+    const type = () => {
+      const currentWord = WORDS[currentWordIndex];
+      const targetText = BASE_TEXT + currentWord;
+
+      if (!isErasing) {
+        // Écriture
+        if (currentCharIndex <= targetText.length) {
+          setDisplayText(targetText.slice(0, currentCharIndex));
+          currentCharIndex++;
+          setTimeout(type, typingSpeed);
+        } else {
+          // Mot complet
+          if (currentWordIndex < WORDS.length - 1) {
+            // Attendre puis effacer (pause très courte)
+            isErasing = true;
+            setTimeout(type, isMobile ? 200 : 400);
+          } else {
+            // Dernier mot - afficher le bouton
+            setTimeout(() => setShowButton(true), isMobile ? 400 : 800);
+          }
+        }
+      } else {
+        // Effacement
+        const nextWord = WORDS[currentWordIndex + 1];
+        const commonPrefixLength = getCommonPrefix(currentWord, nextWord);
+        const stopAt = BASE_TEXT.length + commonPrefixLength;
+
+        if (currentCharIndex > stopAt) {
+          currentCharIndex--;
+          setDisplayText(targetText.slice(0, currentCharIndex));
+          setTimeout(type, erasingSpeed);
+        } else {
+          // Effacement terminé - mot suivant
+          isErasing = false;
+          currentWordIndex++;
+          setTimeout(type, isMobile ? 100 : 200);
+        }
+      }
+    };
+
+    type();
+  }, [isMounted, isMobile, typingSpeed, erasingSpeed]);
 
   return (
     <main className="h-screen w-full bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-x-hidden overflow-y-hidden">
@@ -128,7 +174,7 @@ export default function HeroSection() {
         {/* Texte avec animation typewriter */}
         <div className="min-h-[160px] sm:min-h-[200px] md:min-h-[240px] lg:min-h-[280px] flex items-center justify-center px-2 sm:px-4">
           <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight max-w-4xl drop-shadow-2xl">
-            {currentText}
+            {displayText}
             <span
               className={`inline-block w-0.5 sm:w-1 h-8 sm:h-12 md:h-14 lg:h-16 xl:h-20 ml-1 sm:ml-2 bg-gradient-to-b from-purple-400 to-blue-400 align-middle shadow-lg shadow-purple-400/50 ${
                 showCursor ? 'opacity-100' : 'opacity-0'
