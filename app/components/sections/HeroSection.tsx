@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '@/app/hooks/useIsMobile';
 
 export default function HeroSection() {
   const [showCursor, setShowCursor] = useState(true);
@@ -9,20 +10,22 @@ export default function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showButton, setShowButton] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const isMobile = useIsMobile();
 
   const fullText = "Vous êtes invités à célébrer un moment unique...";
-  const typingSpeed = 80;
+  const typingSpeed = isMobile ? 60 : 80;
 
-  // Générer les particules une seule fois
+  // Générer les particules une seule fois - réduit sur mobile
   const particles = useMemo(() => {
-    return Array.from({ length: 30 }, (_, i) => ({
+    const count = isMobile ? 8 : 30;
+    return Array.from({ length: count }, (_, i) => ({
       id: i,
       x: (i * 73) % 100,
       y: (i * 47) % 100,
-      duration: 15 + (i % 10),
-      delay: i * 0.2,
+      duration: isMobile ? 10 + (i % 5) : 15 + (i % 10),
+      delay: isMobile ? i * 0.1 : i * 0.2,
     }));
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -47,10 +50,10 @@ export default function HeroSection() {
     } else {
       const buttonTimeout = setTimeout(() => {
         setShowButton(true);
-      }, 800);
+      }, isMobile ? 400 : 800);
       return () => clearTimeout(buttonTimeout);
     }
-  }, [currentIndex, fullText]);
+  }, [currentIndex, fullText, typingSpeed, isMobile]);
 
   return (
     <main className="h-screen w-full bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-x-hidden overflow-y-hidden">
@@ -80,28 +83,28 @@ export default function HeroSection() {
         </div>
       )}
 
-      {/* Orbes lumineux animés */}
+      {/* Orbes lumineux animés - réduits sur mobile */}
       <motion.div
-        className="absolute -top-20 -right-20 sm:top-10 sm:right-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/20 rounded-full blur-3xl pointer-events-none"
+        className={`absolute -top-20 -right-20 sm:top-10 sm:right-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/20 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
         animate={{
-          scale: [1, 1.2, 1],
+          scale: isMobile ? [1, 1.1, 1] : [1, 1.2, 1],
           opacity: [0.2, 0.4, 0.2],
         }}
         transition={{
-          duration: 8,
-          repeat: Infinity,
+          duration: isMobile ? 6 : 8,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }}
       />
       <motion.div
-        className="absolute -bottom-20 -left-20 sm:bottom-10 sm:left-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/20 rounded-full blur-3xl pointer-events-none"
+        className={`absolute -bottom-20 -left-20 sm:bottom-10 sm:left-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/20 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
         animate={{
-          scale: [1.2, 1, 1.2],
+          scale: isMobile ? [1.1, 1, 1.1] : [1.2, 1, 1.2],
           opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          duration: 10,
-          repeat: Infinity,
+          duration: isMobile ? 7 : 10,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }}
       />
@@ -142,7 +145,7 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: isMobile ? 0.4 : 0.6 }}
             className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer z-20"
             onClick={() => {
               const nextSection = document.getElementById('intro-section');
@@ -167,7 +170,7 @@ export default function HeroSection() {
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: isMobile ? 1 : Infinity,
                 ease: "easeInOut",
               }}
             >

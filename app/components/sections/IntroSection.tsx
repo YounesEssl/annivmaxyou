@@ -1,38 +1,41 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/app/hooks/useIsMobile';
 
 export default function IntroSection() {
+  const isMobile = useIsMobile();
+
   return (
     <section
       id="intro-section"
       className="min-h-screen bg-slate-900 flex items-center justify-center py-20 sm:py-24 relative overflow-x-hidden"
       style={{ paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
     >
-      {/* Orbes lumineux */}
+      {/* Orbes lumineux - réduits sur mobile */}
       <motion.div
-        className="absolute top-1/4 -right-20 sm:right-1/4 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/15 rounded-full blur-3xl pointer-events-none"
+        className={`absolute top-1/4 -right-20 sm:right-1/4 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/15 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
         animate={{
-          scale: [1, 1.15, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
+          scale: isMobile ? [1, 1.08, 1] : [1, 1.15, 1],
+          x: isMobile ? [0, 15, 0] : [0, 30, 0],
+          y: isMobile ? [0, -10, 0] : [0, -20, 0],
         }}
         transition={{
-          duration: 12,
-          repeat: Infinity,
+          duration: isMobile ? 8 : 12,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 -left-20 sm:left-1/4 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none"
+        className={`absolute bottom-1/4 -left-20 sm:left-1/4 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/15 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
         animate={{
-          scale: [1.15, 1, 1.15],
-          x: [0, -30, 0],
-          y: [0, 20, 0],
+          scale: isMobile ? [1.08, 1, 1.08] : [1.15, 1, 1.15],
+          x: isMobile ? [0, -15, 0] : [0, -30, 0],
+          y: isMobile ? [0, 10, 0] : [0, 20, 0],
         }}
         transition={{
-          duration: 10,
-          repeat: Infinity,
+          duration: isMobile ? 7 : 10,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }}
       />
@@ -41,8 +44,8 @@ export default function IntroSection() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+          transition={{ duration: isMobile ? 0.6 : 1, ease: "easeOut" }}
         >
           {/* Premier bloc de texte */}
           <div className="space-y-8" style={{ marginBottom: '6rem' }}>
@@ -76,7 +79,7 @@ export default function IntroSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: isMobile ? 0.6 : 1, delay: isMobile ? 0.15 : 0.3 }}
             className="space-y-6"
           >
             <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 leading-relaxed font-light">

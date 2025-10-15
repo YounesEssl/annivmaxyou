@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/app/hooks/useIsMobile';
 
 export default function FloatingCTA() {
+  const isMobile = useIsMobile();
+
   return (
     <motion.a
       href="https://tally.so/r/mZqRao"
@@ -13,13 +16,13 @@ export default function FloatingCTA() {
       initial={{ opacity: 0, y: 20 }}
       animate={{
         opacity: 1,
-        y: [0, -8, 0],
+        y: isMobile ? 0 : [0, -8, 0],
       }}
       transition={{
-        opacity: { duration: 0.6, delay: 1.5 },
+        opacity: { duration: 0.6, delay: isMobile ? 0.8 : 1.5 },
         y: {
           duration: 3,
-          repeat: Infinity,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }
       }}
@@ -43,10 +46,10 @@ export default function FloatingCTA() {
           stroke="currentColor"
           viewBox="0 0 24 24"
           strokeWidth={2.5}
-          animate={{ x: [0, 3, 0] }}
+          animate={{ x: isMobile ? 0 : [0, 3, 0] }}
           transition={{
             duration: 2,
-            repeat: Infinity,
+            repeat: isMobile ? 0 : Infinity,
             ease: "easeInOut",
           }}
         >

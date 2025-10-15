@@ -2,25 +2,28 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useIsMobile } from '@/app/hooks/useIsMobile';
 
 export default function VenueSection() {
+  const isMobile = useIsMobile();
+
   return (
     <section
       id="venue-section"
       className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
       style={{ paddingTop: '8rem', paddingBottom: '20rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
     >
-      {/* Orbe lumineux */}
+      {/* Orbe lumineux - réduit sur mobile */}
       <motion.div
-        className="absolute top-1/3 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/10 rounded-full blur-3xl pointer-events-none"
+        className={`absolute top-1/3 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/10 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
         animate={{
-          scale: [1, 1.1, 1],
-          x: [0, 40, 0],
-          y: [0, -30, 0],
+          scale: isMobile ? [1, 1.05, 1] : [1, 1.1, 1],
+          x: isMobile ? [0, 20, 0] : [0, 40, 0],
+          y: isMobile ? [0, -15, 0] : [0, -30, 0],
         }}
         transition={{
-          duration: 15,
-          repeat: Infinity,
+          duration: isMobile ? 10 : 15,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }}
       />
@@ -29,8 +32,8 @@ export default function VenueSection() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+          transition={{ duration: isMobile ? 0.6 : 1, ease: "easeOut" }}
         >
           {/* Titre */}
           <div style={{ marginBottom: '5rem' }}>
@@ -50,7 +53,7 @@ export default function VenueSection() {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.1 : 0.2 }}
               className="space-y-8"
             >
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light">
@@ -87,7 +90,7 @@ export default function VenueSection() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.2 : 0.4 }}
               className="relative"
             >
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm border border-white/10">

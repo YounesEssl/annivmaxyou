@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '@/app/hooks/useIsMobile';
 
 export default function ActivitiesSection() {
   const activities = [
@@ -20,31 +21,32 @@ export default function ActivitiesSection() {
   const [showAll, setShowAll] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!isInView || hasAnimated) return;
 
-    // Délai initial avant de commencer l'animation
+    // Délai initial avant de commencer l'animation - réduit sur mobile
     if (currentIndex === 0) {
       const initialDelay = setTimeout(() => {
         setCurrentIndex(1);
-      }, 1200);
+      }, isMobile ? 600 : 1200);
       return () => clearTimeout(initialDelay);
     }
 
     if (!showAll && currentIndex < activities.length) {
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 400);
+      }, isMobile ? 200 : 400);
       return () => clearTimeout(timer);
     } else if (currentIndex === activities.length && !showAll) {
       const timer = setTimeout(() => {
         setShowAll(true);
         setHasAnimated(true);
-      }, 800);
+      }, isMobile ? 400 : 800);
       return () => clearTimeout(timer);
     }
-  }, [currentIndex, showAll, hasAnimated, activities.length, isInView]);
+  }, [currentIndex, showAll, hasAnimated, activities.length, isInView, isMobile]);
 
   return (
     <section
@@ -52,17 +54,17 @@ export default function ActivitiesSection() {
       className="min-h-screen bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
       style={{ paddingTop: '10rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
     >
-      {/* Orbes lumineux */}
+      {/* Orbes lumineux - réduits sur mobile */}
       <motion.div
-        className="absolute top-1/4 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
+        className={`absolute top-1/4 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
         animate={{
-          scale: [1, 1.15, 1],
-          x: [0, 40, 0],
-          y: [0, -30, 0],
+          scale: isMobile ? [1, 1.08, 1] : [1, 1.15, 1],
+          x: isMobile ? [0, 20, 0] : [0, 40, 0],
+          y: isMobile ? [0, -15, 0] : [0, -30, 0],
         }}
         transition={{
-          duration: 18,
-          repeat: Infinity,
+          duration: isMobile ? 12 : 18,
+          repeat: isMobile ? 0 : Infinity,
           ease: "easeInOut",
         }}
       />
@@ -71,8 +73,8 @@ export default function ActivitiesSection() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+          transition={{ duration: isMobile ? 0.6 : 1, ease: "easeOut" }}
           onViewportEnter={() => setIsInView(true)}
         >
           {/* Titre qui se transforme */}
@@ -102,7 +104,7 @@ export default function ActivitiesSection() {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.2 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  transition={{ duration: isMobile ? 0.25 : 0.35, ease: "easeOut" }}
                   className="absolute overflow-visible"
                 >
                   <p className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center overflow-visible" style={{ lineHeight: '1.3' }}>
@@ -114,14 +116,14 @@ export default function ActivitiesSection() {
                   key="recap"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  transition={{ duration: isMobile ? 0.5 : 0.8, ease: "easeOut" }}
                   className="space-y-12 w-full"
                 >
                   {/* Titre de retour */}
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: isMobile ? 0.4 : 0.6 }}
                     className="overflow-visible"
                     style={{ marginBottom: '3rem', paddingBottom: '1rem' }}
                   >
@@ -137,7 +139,7 @@ export default function ActivitiesSection() {
                         key={activity}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        transition={{ duration: isMobile ? 0.3 : 0.4, delay: index * (isMobile ? 0.05 : 0.1) }}
                         className="text-xl sm:text-2xl md:text-3xl text-white/80 font-light"
                       >
                         {activity}
@@ -150,7 +152,7 @@ export default function ActivitiesSection() {
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.9 }}
+                    transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.5 : 0.9 }}
                     className="text-center"
                   >
                     <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 leading-relaxed">
