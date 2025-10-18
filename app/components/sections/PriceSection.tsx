@@ -1,8 +1,21 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function PriceSection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: priceRef, isVisible: priceVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: includesRef, isVisible: includesVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: card1Ref, isVisible: card1Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: card2Ref, isVisible: card2Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: card3Ref, isVisible: card3Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: card4Ref, isVisible: card4Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: card5Ref, isVisible: card5Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: dividerRef, isVisible: dividerVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: finalRef, isVisible: finalVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="price-section"
@@ -19,71 +32,36 @@ export default function PriceSection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.1, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          x: [0, -25, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
+      <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '4rem', paddingBottom: '0.5rem' }}>
-            <motion.h2
+            <h2
               className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center overflow-visible"
               style={{ lineHeight: '1.3' }}
             >
               Le prix
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Introduction */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center"
+          <div
+            ref={introRef as React.RefObject<HTMLDivElement>}
+            className={`${introVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 text-center`}
             style={{ marginBottom: '3.5rem' }}
           >
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light">
               Pour que cet événement ait lieu dans ce lieu de rêve, avec tout ce qu&apos;il faut pour manger, boire et faire la fête, on a besoin que chacun mette un petit coup de pouce.
             </p>
-          </motion.div>
+          </div>
 
           {/* Prix principal - Hero */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-center"
+          <div
+            ref={priceRef as React.RefObject<HTMLDivElement>}
+            className={`${priceVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-300 text-center`}
             style={{ marginBottom: '4rem' }}
           >
             <p className="text-lg sm:text-xl md:text-2xl text-white/80 leading-relaxed font-light" style={{ marginBottom: '1.5rem' }}>
@@ -100,36 +78,27 @@ export default function PriceSection() {
             <p className="text-base sm:text-lg md:text-xl text-white/70 leading-relaxed font-light" style={{ marginTop: '1rem' }}>
               pour tout le week-end
             </p>
-          </motion.div>
+          </div>
 
           {/* Ce que ça comprend */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+          <div
+            ref={includesRef as React.RefObject<HTMLDivElement>}
+            className={`${includesVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-400`}
             style={{ marginBottom: '4rem' }}
           >
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+            <h3
               className="text-center text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200"
               style={{ marginBottom: '4rem', paddingBottom: '0.5rem', lineHeight: '1.3' }}
             >
               Ce que ça comprend
-            </motion.h3>
+            </h3>
 
             {/* Grid layout avec design asymétrique */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
               {/* Carte 1 - 2 nuits */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm"
+              <div
+                ref={card1Ref as React.RefObject<HTMLDivElement>}
+                className={`${card1Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-500 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
                 style={{
                   background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.15) 100%)',
                 }}
@@ -141,15 +110,12 @@ export default function PriceSection() {
                   <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mb-3" />
                   <p className="text-lg text-white/70">Sur place</p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Carte 2 - Repas */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm"
+              <div
+                ref={card2Ref as React.RefObject<HTMLDivElement>}
+                className={`${card2Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-600 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
                 style={{
                   background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.15) 100%)',
                 }}
@@ -161,15 +127,12 @@ export default function PriceSection() {
                   <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mb-3" />
                   <p className="text-lg text-white/70">Matin, midi & soir</p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Carte 3 - Cadre privatisé */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm"
+              <div
+                ref={card3Ref as React.RefObject<HTMLDivElement>}
+                className={`${card3Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-700 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
                 style={{
                   background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(139, 92, 246, 0.15) 100%)',
                 }}
@@ -181,15 +144,12 @@ export default function PriceSection() {
                   <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-pink-400/50 to-transparent mb-3" />
                   <p className="text-lg text-white/70">100% privatisé</p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Carte 4 - ALCOOL (HERO - full width) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.8 }}
-                className="lg:col-span-2 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm"
+              <div
+                ref={card4Ref as React.RefObject<HTMLDivElement>}
+                className={`${card4Visible ? 'animate-scale-in' : 'opacity-0'} duration-700 delay-800 lg:col-span-2 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
                 style={{
                   background: 'linear-gradient(135deg, rgba(251, 146, 60, 0.15) 0%, rgba(234, 88, 12, 0.25) 50%, rgba(249, 115, 22, 0.15) 100%)',
                 }}
@@ -206,19 +166,9 @@ export default function PriceSection() {
 
                 {/* Contenu centré */}
                 <div className="relative h-full flex flex-col items-center justify-center text-center p-10 z-10">
-                  <motion.div
-                    className="text-8xl mb-6"
-                    animate={{
-                      rotate: [0, 5, -5, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
+                  <div className={`text-8xl mb-6 ${!isMobile ? 'animate-rotate' : ''}`}>
                     🍺
-                  </motion.div>
+                  </div>
                   <h3 className="text-5xl sm:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-200 via-amber-100 to-orange-200 leading-tight mb-4 uppercase tracking-tight">
                     Alcool illimité
                   </h3>
@@ -227,15 +177,12 @@ export default function PriceSection() {
                     Tout le week-end
                   </p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Carte 5 - Week-end inoubliable */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm"
+              <div
+                ref={card5Ref as React.RefObject<HTMLDivElement>}
+                className={`${card5Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-900 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
                 style={{
                   background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.15) 100%)',
                 }}
@@ -252,34 +199,29 @@ export default function PriceSection() {
                   <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mb-3" />
                   <p className="text-lg text-white/70">On l&apos;espère !</p>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Divider */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+          <div
+            ref={dividerRef as React.RefObject<HTMLDivElement>}
+            className={`${dividerVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-900`}
             style={{ marginBottom: '4rem' }}
           >
             <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          </motion.div>
+          </div>
 
           {/* Message final */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="text-center"
+          <div
+            ref={finalRef as React.RefObject<HTMLDivElement>}
+            className={`${finalVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-1000 text-center`}
           >
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light">
               Franchement, on ne fait pas ça tous les ans, c&apos;est peut-être même une fois dans une vie, alors on espère que vous serez au rendez-vous 🔥
             </p>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}

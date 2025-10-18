@@ -1,8 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function RulesSection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
+
   const rules = [
     {
       title: 'Tu casses → tu payes',
@@ -42,60 +46,26 @@ export default function RulesSection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.12, 1],
-          x: [0, 35, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          x: [0, -30, 0],
-          y: [0, 25, 0],
-        }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
+      <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
-            <motion.h2
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+            <h2
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center transition-transform duration-300 hover:scale-103"
             >
               Les rappels logiques
               <br />
               <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">(mais importants)</span>
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Introduction */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-center"
+          <div
+            ref={introRef as React.RefObject<HTMLDivElement>}
+            className={`${introVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-100 text-center`}
             style={{ marginBottom: '6rem' }}
           >
             <p className="text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light">
@@ -103,18 +73,15 @@ export default function RulesSection() {
               <br />
               Donc, quelques règles simples :
             </p>
-          </motion.div>
+          </div>
 
           {/* Liste des règles */}
           <div style={{ marginTop: '3rem' }}>
             {rules.map((rule, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: rule.delay }}
-                style={{ marginBottom: '4rem' }}
+                className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}
+                style={{ marginBottom: '4rem', animationDelay: `${rule.delay * 1000}ms` }}
               >
                 <div className="flex items-start gap-6 sm:gap-8">
                   <div className="flex-shrink-0">
@@ -145,10 +112,10 @@ export default function RulesSection() {
                 {index < rules.length - 1 && (
                   <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" style={{ marginTop: '2.5rem' }} />
                 )}
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}

@@ -1,8 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function LuggageSection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: iconRef, isVisible: iconVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="luggage-section"
@@ -19,71 +24,28 @@ export default function LuggageSection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.1, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          x: [0, -25, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/4 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
+      <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
-            <motion.h2
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+            <h2
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center transition-transform duration-300 hover:scale-103"
             >
               Dans ma valise j&apos;ai…
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Layout horizontal: Icône + Contenu */}
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12 lg:gap-16 items-start">
             {/* Grosse icône valise à gauche */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center lg:justify-start"
+            <div
+              ref={iconRef as React.RefObject<HTMLDivElement>}
+              className={`${iconVisible ? 'animate-fade-in-left' : 'opacity-0'} duration-800 delay-200 flex justify-center lg:justify-start`}
             >
-              <motion.div
-                animate={{
-                  y: [0, -15, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
+              <div className={`${!isMobile ? 'animate-float' : ''}`}>
                 <svg
                   className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64"
                   viewBox="0 0 200 200"
@@ -123,16 +85,13 @@ export default function LuggageSection() {
                     </linearGradient>
                   </defs>
                 </svg>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Contenu texte à droite */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="space-y-10"
+            <div
+              ref={contentRef as React.RefObject<HTMLDivElement>}
+              className={`${contentVisible ? 'animate-fade-in-right' : 'opacity-0'} duration-800 delay-300 space-y-10`}
             >
               {/* Soirée du samedi */}
               <div className="space-y-6">
@@ -164,9 +123,9 @@ export default function LuggageSection() {
                   Enfin, si le temps le permet, la piscine chauffée sera accessible. Pensez donc à glisser un <span className="font-semibold text-white">maillot de bain</span> dans votre valise, au cas où.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}

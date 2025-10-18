@@ -1,8 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function DownloadSection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: descriptionRef, isVisible: descriptionVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: buttonRef, isVisible: buttonVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="download-section"
@@ -19,71 +24,36 @@ export default function DownloadSection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.1, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          x: [0, -25, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 14,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
+      <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
           {/* Titre principal */}
           <div className="text-center" style={{ marginBottom: '3.5rem' }}>
-            <motion.h2
+            <h2
               className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200"
               style={{ lineHeight: '1.3', paddingBottom: '0.5rem' }}
             >
               Besoin d&apos;un récap ?
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Description */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center"
+          <div
+            ref={descriptionRef as React.RefObject<HTMLDivElement>}
+            className={`${descriptionVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 text-center`}
             style={{ marginBottom: '3.5rem' }}
           >
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light">
               Télécharge toutes les infos pratiques dans un PDF : dates, lieu, prix, programme... tout ce qu&apos;il te faut pour ne rien oublier !
             </p>
-          </motion.div>
+          </div>
 
           {/* Bouton de téléchargement */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-center"
+          <div
+            ref={buttonRef as React.RefObject<HTMLDivElement>}
+            className={`${buttonVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-300 text-center`}
           >
             <a
               href="/recap-anniv.pdf"
@@ -118,8 +88,8 @@ export default function DownloadSection() {
                 <div className="text-sm text-white/60 font-light">PDF - Toutes les infos</div>
               </div>
             </a>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}

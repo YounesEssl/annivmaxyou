@@ -1,11 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useIsMobile } from '@/app/hooks/useIsMobile';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function VenueSection() {
-  const isMobile = useIsMobile();
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: isMobile ? '-50px' : '-100px' });
+  const { ref: textRef, isVisible: textVisible } = useScrollAnimation({ threshold: 0.2, delay: isMobile ? 100 : 200 });
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation({ threshold: 0.2, delay: isMobile ? 200 : 400 });
 
   return (
     <section
@@ -13,49 +15,24 @@ export default function VenueSection() {
       className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
       style={{ paddingTop: '8rem', paddingBottom: '20rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
     >
-      {/* Orbe lumineux - réduit sur mobile */}
-      <motion.div
-        className={`absolute top-1/3 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/10 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
-        animate={{
-          scale: isMobile ? [1, 1.05, 1] : [1, 1.1, 1],
-          x: isMobile ? [0, 20, 0] : [0, 40, 0],
-          y: isMobile ? [0, -15, 0] : [0, -30, 0],
-        }}
-        transition={{
-          duration: isMobile ? 10 : 15,
-          repeat: isMobile ? 0 : Infinity,
-          ease: "easeInOut",
-        }}
+      {/* Orbe lumineux - animé uniquement sur desktop */}
+      <div
+        className={`orb orb-pulse absolute top-1/3 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/10 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
       />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-          transition={{ duration: isMobile ? 0.6 : 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} ${isMobile ? 'duration-600' : 'duration-1000'}`}>
           {/* Titre */}
           <div style={{ marginBottom: '5rem' }}>
-            <motion.h2
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
-            >
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center transition-transform duration-300 hover:scale-105">
               Le domaine
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Contenu texte + image */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             {/* Texte */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.1 : 0.2 }}
-              className="space-y-8"
-            >
+            <div ref={textRef as React.RefObject<HTMLDivElement>} className={`space-y-8 ${textVisible ? 'animate-fade-in-left' : 'opacity-0'} ${isMobile ? 'duration-500' : 'duration-800'} ${isMobile ? 'delay-100' : 'delay-200'}`}>
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light">
                 À seulement{' '}
                 <span className="font-semibold relative inline-block">
@@ -75,24 +52,14 @@ export default function VenueSection() {
               </p>
 
               <div style={{ paddingTop: '2rem' }}>
-                <motion.span
-                  className="inline-block font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-blue-300 to-purple-300 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
-                  whileHover={{ scale: 1.05, rotate: [-0.5, 0.5, -0.5, 0] }}
-                  transition={{ duration: 0.3 }}
-                >
+                <span className="inline-block font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-blue-300 to-purple-300 text-4xl sm:text-5xl md:text-6xl lg:text-7xl transition-transform duration-300 hover:scale-110">
                   INCROYABLE
-                </motion.span>
+                </span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.2 : 0.4 }}
-              className="relative"
-            >
+            <div ref={imageRef as React.RefObject<HTMLDivElement>} className={`relative ${imageVisible ? 'animate-fade-in-right' : 'opacity-0'} ${isMobile ? 'duration-500' : 'duration-800'} ${isMobile ? 'delay-200' : 'delay-400'}`}>
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm border border-white/10">
                 <Image
                   src="/domaine.png"
@@ -105,9 +72,9 @@ export default function VenueSection() {
 
               {/* Effet de glow autour de l'image */}
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl blur-xl -z-10" />
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Dégradé de transition ultra doux */}

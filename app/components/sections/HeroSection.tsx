@@ -1,44 +1,35 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useIsMobile } from '@/app/hooks/useIsMobile';
+import { useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 const BASE_TEXT = "Vous êtes invités à célébrer un moment ";
 const WORDS = ["unique...", "inoubliable...", "immanquable..."];
 
 export default function HeroSection() {
-  const [showCursor, setShowCursor] = useState(true);
   const [displayText, setDisplayText] = useState('');
   const [showButton, setShowButton] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const isMobile = useIsMobile();
+  const { isMobile } = useDeviceOptimizations();
 
   const typingSpeed = isMobile ? 50 : 70;
   const erasingSpeed = isMobile ? 40 : 60;
 
-  // Générer les particules une seule fois - réduit sur mobile
+  // Générer les particules une seule fois - pas sur mobile
   const particles = useMemo(() => {
-    const count = isMobile ? 8 : 30;
+    if (isMobile) return [];
+    const count = 20;
     return Array.from({ length: count }, (_, i) => ({
       id: i,
       x: (i * 73) % 100,
       y: (i * 47) % 100,
-      duration: isMobile ? 10 + (i % 5) : 15 + (i % 10),
-      delay: isMobile ? i * 0.1 : i * 0.2,
+      duration: 10 + (i % 8),
+      delay: i * 0.15,
     }));
   }, [isMobile]);
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
-
-  // Animation du curseur clignotant
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 530);
-    return () => clearInterval(cursorInterval);
   }, []);
 
   // Animation typewriter simple
@@ -103,132 +94,85 @@ export default function HeroSection() {
 
   return (
     <main className="h-screen w-full bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-x-hidden overflow-y-hidden">
-      {/* Particules flottantes en arrière-plan */}
-      {isMounted && (
+      {/* Particules flottantes en arrière-plan - Desktop uniquement */}
+      {isMounted && particles.length > 0 && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {particles.map((particle) => (
-            <motion.div
+            <div
               key={particle.id}
-              className="absolute w-0.5 h-0.5 sm:w-1 sm:h-1 bg-white/30 rounded-full"
+              className="particle absolute w-1 h-1 bg-white/30 rounded-full"
               style={{
                 left: `${particle.x}%`,
                 top: `${particle.y}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Infinity,
-                ease: "linear",
-                delay: particle.delay,
-              }}
+                '--tx': `${((particle.id * 37) % 100) - 50}px`,
+                '--ty': `${-100 - (particle.id * 23) % 50}px`,
+                '--duration': `${particle.duration}s`,
+                '--delay': `${particle.delay}s`,
+              } as React.CSSProperties}
             />
           ))}
         </div>
       )}
 
-      {/* Orbes lumineux animés - réduits sur mobile */}
-      <motion.div
-        className={`absolute -top-20 -right-20 sm:top-10 sm:right-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/20 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
-        animate={{
-          scale: isMobile ? [1, 1.1, 1] : [1, 1.2, 1],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{
-          duration: isMobile ? 6 : 8,
-          repeat: isMobile ? 0 : Infinity,
-          ease: "easeInOut",
-        }}
+      {/* Orbes lumineux animés - animés uniquement sur desktop */}
+      <div
+        className={`orb orb-pulse absolute -top-20 -right-20 sm:top-10 sm:right-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/20 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
       />
-      <motion.div
-        className={`absolute -bottom-20 -left-20 sm:bottom-10 sm:left-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/20 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
-        animate={{
-          scale: isMobile ? [1.1, 1, 1.1] : [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: isMobile ? 7 : 10,
-          repeat: isMobile ? 0 : Infinity,
-          ease: "easeInOut",
-        }}
+      <div
+        className={`orb orb-pulse absolute -bottom-20 -left-20 sm:bottom-10 sm:left-10 w-64 h-64 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/20 rounded-full pointer-events-none ${isMobile ? 'blur-xl' : 'blur-3xl'}`}
+        style={{ animationDelay: '1s' }}
       />
 
       {/* Contenu principal */}
       <div className="w-full max-w-5xl mx-auto px-6 sm:px-8 md:px-10 text-center relative z-10">
         {/* Date */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-6 sm:mb-8 md:mb-10"
-        >
+        <div className="animate-fade-in-down duration-800 mb-6 sm:mb-8 md:mb-10">
           <div className="inline-block">
             <p className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.35em] text-purple-300/80 font-light">
               27 - 29 Mars 2025
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* Texte avec animation typewriter */}
         <div className="min-h-[160px] sm:min-h-[200px] md:min-h-[240px] lg:min-h-[280px] flex items-center justify-center px-2 sm:px-4">
           <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight max-w-4xl drop-shadow-2xl">
             {displayText}
             <span
-              className={`inline-block w-0.5 sm:w-1 h-8 sm:h-12 md:h-14 lg:h-16 xl:h-20 ml-1 sm:ml-2 bg-gradient-to-b from-purple-400 to-blue-400 align-middle shadow-lg shadow-purple-400/50 ${
-                showCursor ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{ transition: 'opacity 0.1s' }}
+              className={`animate-blink inline-block w-0.5 sm:w-1 h-8 sm:h-12 md:h-14 lg:h-16 xl:h-20 ml-1 sm:ml-2 bg-gradient-to-b from-purple-400 to-blue-400 align-middle shadow-lg shadow-purple-400/50`}
             />
           </h1>
         </div>
       </div>
 
       {/* Flèche scroll - Position absolue en bas */}
-      <AnimatePresence>
-        {showButton && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: isMobile ? 0.4 : 0.6 }}
-            className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer z-20"
-            onClick={() => {
-              const nextSection = document.getElementById('intro-section');
-              nextSection?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            whileHover={{ y: 5 }}
-          >
-            <motion.p
-              className="text-xs sm:text-sm text-white/60 tracking-wider font-light"
-            >
-              Découvrir la suite
-            </motion.p>
+      {showButton && (
+        <div
+          className={`animate-fade-in-up absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer z-20 transition-transform hover:translate-y-1 ${isMobile ? 'duration-300' : 'duration-600'}`}
+          onClick={() => {
+            const nextSection = document.getElementById('intro-section');
+            nextSection?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <p className="text-xs sm:text-sm text-white/60 tracking-wider font-light">
+            Découvrir la suite
+          </p>
 
-            <motion.svg
-              className="w-6 h-6 sm:w-8 sm:h-8 text-white/60"
-              fill="none"
-              strokeWidth="2"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              animate={{
-                y: [0, 8, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: isMobile ? 1 : Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </motion.svg>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <svg
+            className={`w-6 h-6 sm:w-8 sm:h-8 text-white/60 ${!isMobile ? 'animate-bounce' : ''}`}
+            fill="none"
+            strokeWidth="2"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </svg>
+        </div>
+      )}
 
       {/* Dégradé de transition vers la section suivante */}
       <div className="absolute bottom-0 left-0 right-0 h-48 sm:h-64 bg-gradient-to-b from-transparent to-slate-900 pointer-events-none z-10" />

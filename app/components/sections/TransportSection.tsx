@@ -1,9 +1,14 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 import Image from 'next/image';
 
 export default function TransportSection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: textRef, isVisible: textVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="transport-section"
@@ -20,60 +25,26 @@ export default function TransportSection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.1, 1],
-          x: [0, -30, 0],
-          y: [0, 20, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          x: [0, 35, 0],
-          y: [0, -25, 0],
-        }}
-        transition={{
-          duration: 17,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
+      <div className={`orb orb-pulse absolute bottom-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
-            <motion.h2
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+            <h2
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center transition-transform duration-300 hover:scale-103"
             >
               Transport
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Layout horizontal inversé: Texte + Image */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center" style={{ marginBottom: '8rem' }}>
             {/* Contenu texte à gauche */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-10 order-2 lg:order-1"
+            <div
+              ref={textRef as React.RefObject<HTMLDivElement>}
+              className={`${textVisible ? 'animate-fade-in-left' : 'opacity-0'} duration-800 delay-200 space-y-10 order-2 lg:order-1`}
             >
               {/* Localisation */}
               <div className="space-y-6">
@@ -104,15 +75,12 @@ export default function TransportSection() {
                   Il y a donc pas de stationnement à payer, et vos voitures seront en sécurité tout le week-end.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
             {/* Image à droite */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="relative order-1 lg:order-2"
+            <div
+              ref={imageRef as React.RefObject<HTMLDivElement>}
+              className={`${imageVisible ? 'animate-fade-in-right' : 'opacity-0'} duration-800 delay-400 relative order-1 lg:order-2`}
             >
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm border border-white/10">
                 <Image
@@ -124,9 +92,9 @@ export default function TransportSection() {
                 />
               </div>
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl blur-xl -z-10" />
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}

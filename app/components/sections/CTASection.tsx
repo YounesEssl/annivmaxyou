@@ -1,8 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function CTASection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: messageRef, isVisible: messageVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: buttonRef, isVisible: buttonVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="cta-section"
@@ -19,53 +24,29 @@ export default function CTASection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] bg-purple-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.15, 0.1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] bg-purple-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-4xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="text-center"
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000 text-center`}>
           {/* Message */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light"
+          <p
+            ref={messageRef as React.RefObject<HTMLParagraphElement>}
+            className={`${messageVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light`}
             style={{ marginBottom: '3rem' }}
           >
             Si tu es prêt à t&apos;inscrire définitivement et à régler, tu peux tout de suite cliquer sur le bouton <span className="font-semibold text-white">S&apos;inscrire</span> et remplir le formulaire
-          </motion.p>
+          </p>
 
           {/* Bouton */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+          <div
+            ref={buttonRef as React.RefObject<HTMLDivElement>}
+            className={`${buttonVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-400`}
           >
-            <motion.a
+            <a
               href="https://tally.so/r/mZqRao"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center relative"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="group inline-flex items-center justify-center relative transition-transform duration-300 hover:scale-105 active:scale-95"
             >
               {/* Effet de glow */}
               <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/50 to-blue-500/50 rounded-full blur-lg opacity-50 group-hover:opacity-70 transition-opacity" />
@@ -76,29 +57,23 @@ export default function CTASection() {
                 style={{ padding: '1rem 2rem' }}
               >
                 <span className="text-lg sm:text-xl">S&apos;inscrire maintenant</span>
-                <motion.svg
-                  className="w-5 h-5"
+                <svg
+                  className={`w-5 h-5 ${!isMobile ? 'animate-bounce' : ''}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                   strokeWidth={2.5}
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
-                </motion.svg>
+                </svg>
               </div>
-            </motion.a>
-          </motion.div>
-        </motion.div>
+            </a>
+          </div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}

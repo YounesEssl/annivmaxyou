@@ -1,8 +1,20 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrollAnimation';
 
 export default function FoodSection() {
+  const { isMobile } = useDeviceOptimizations();
+  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
+  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: solutionRef, isVisible: solutionVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: divider1Ref, isVisible: divider1Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: announcementRef, isVisible: announcementVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: detailsRef, isVisible: detailsVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: divider2Ref, isVisible: divider2Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: fridayRef, isVisible: fridayVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: divider3Ref, isVisible: divider3Visible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: allergiesRef, isVisible: allergiesVisible } = useScrollAnimation({ threshold: 0.2 });
+
   return (
     <section
       id="food-section"
@@ -19,58 +31,24 @@ export default function FoodSection() {
       />
 
       {/* Orbes lumineux */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1, 1.12, 1],
-          x: [0, 40, 0],
-          y: [0, -25, 0],
-        }}
-        transition={{
-          duration: 17,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          x: [0, -35, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <div className={`orb orb-pulse absolute top-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
+      <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
-            <motion.h2
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+            <h2
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center transition-transform duration-300 hover:scale-103"
             >
               Bouffe
-            </motion.h2>
+            </h2>
           </div>
 
           {/* Introduction */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-8"
+          <div
+            ref={introRef as React.RefObject<HTMLDivElement>}
+            className={`${introVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 space-y-8`}
             style={{ marginBottom: '6rem' }}
           >
             <p className="text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light text-center">
@@ -80,34 +58,27 @@ export default function FoodSection() {
             <p className="text-lg sm:text-xl md:text-2xl text-white/80 leading-relaxed font-light text-center">
               Pour éviter de passer notre week-end dans la cuisine et passer un max de temps à <span className="font-semibold">profiter ensemble</span>, on a opté pour une solution efficace :
             </p>
-          </motion.div>
+          </div>
 
           {/* Solution - Hero */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-center"
+          <div
+            ref={solutionRef as React.RefObject<HTMLDivElement>}
+            className={`${solutionVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-400 text-center`}
             style={{ marginBottom: '8rem' }}
           >
-            <motion.h3
-              className="font-serif font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-300 via-blue-300 to-purple-400 text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+            <h3
+              className="font-serif font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-300 via-blue-300 to-purple-400 text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight transition-transform duration-300 hover:scale-103"
             >
               MAXI salades
               <br />
               de pâtes maison !
-            </motion.h3>
-          </motion.div>
+            </h3>
+          </div>
 
           {/* Divider créatif 1 */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+          <div
+            ref={divider1Ref as React.RefObject<HTMLDivElement>}
+            className={`${divider1Visible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-500`}
             style={{ marginBottom: '8rem' }}
           >
             <div className="flex items-center justify-center gap-3">
@@ -119,29 +90,23 @@ export default function FoodSection() {
               </div>
               <div className="h-[2px] w-16 sm:w-24 bg-gradient-to-l from-transparent to-blue-400/50" />
             </div>
-          </motion.div>
+          </div>
 
           {/* Annonce officielle */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-center"
+          <div
+            ref={announcementRef as React.RefObject<HTMLDivElement>}
+            className={`${announcementVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-600 text-center`}
             style={{ marginBottom: '6rem' }}
           >
             <p className="text-2xl sm:text-3xl md:text-4xl text-white font-semibold leading-relaxed">
               Ce sera donc le repas officiel proposé, offert par nos soins.
             </p>
-          </motion.div>
+          </div>
 
           {/* Détails */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="space-y-10"
+          <div
+            ref={detailsRef as React.RefObject<HTMLDivElement>}
+            className={`${detailsVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-700 space-y-10`}
             style={{ marginBottom: '10rem' }}
           >
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light text-center">
@@ -155,14 +120,12 @@ export default function FoodSection() {
             <p className="text-xl sm:text-2xl md:text-3xl text-white leading-relaxed font-light text-center">
               <span className="font-semibold">Mais bon, ça serait quand même plus cool qu&apos;on mange tous ensemble en plus c&apos;est gratuit</span> 😄
             </p>
-          </motion.div>
+          </div>
 
           {/* Divider créatif 2 */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+          <div
+            ref={divider2Ref as React.RefObject<HTMLDivElement>}
+            className={`${divider2Visible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-800`}
             style={{ marginBottom: '10rem' }}
           >
             <div className="relative flex items-center justify-center">
@@ -177,15 +140,12 @@ export default function FoodSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Vendredi soir */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="space-y-10"
+          <div
+            ref={fridayRef as React.RefObject<HTMLDivElement>}
+            className={`${fridayVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-900 space-y-10`}
             style={{ marginBottom: '10rem' }}
           >
             <div className="text-center space-y-6">
@@ -211,38 +171,25 @@ export default function FoodSection() {
                 (on compte sur vous pour éviter l&apos;armée de chips ✌️)
               </p>
             </div>
-          </motion.div>
+          </div>
 
           {/* Divider créatif 3 */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 1 }}
+          <div
+            ref={divider3Ref as React.RefObject<HTMLDivElement>}
+            className={`${divider3Visible ? 'opacity-100' : 'opacity-0'} duration-800 delay-1000`}
             style={{ marginBottom: '8rem' }}
           >
             <div className="flex items-center justify-center gap-4">
-              <motion.div
-                className="h-[2px] w-12 bg-gradient-to-r from-transparent to-purple-400/40"
-                animate={{ scaleX: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
+              <div className="h-[2px] w-12 bg-gradient-to-r from-transparent to-purple-400/40" />
               <div className="w-3 h-3 rounded-full bg-gradient-to-br from-purple-400/40 to-blue-400/40" />
-              <motion.div
-                className="h-[2px] w-12 bg-gradient-to-l from-transparent to-blue-400/40"
-                animate={{ scaleX: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-              />
+              <div className="h-[2px] w-12 bg-gradient-to-l from-transparent to-blue-400/40" />
             </div>
-          </motion.div>
+          </div>
 
           {/* Allergies */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="relative"
+          <div
+            ref={allergiesRef as React.RefObject<HTMLDivElement>}
+            className={`${allergiesVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-1100 relative`}
           >
             <div className="border-l-4 border-purple-400/50 bg-purple-900/10 backdrop-blur-sm rounded-r-2xl" style={{ padding: '3rem 2.5rem' }}>
               <div className="space-y-6">
@@ -255,8 +202,8 @@ export default function FoodSection() {
                 </p>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Dégradé de transition */}
