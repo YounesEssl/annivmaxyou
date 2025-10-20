@@ -110,7 +110,7 @@ export default function DrinkSection() {
             </p>
 
             <div className="flex flex-wrap justify-center gap-6 items-center">
-              {softs.map((soft, index) => (
+              {softs.map((soft) => (
                 <span
                   key={soft}
                   className="text-xl sm:text-2xl md:text-3xl font-light text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-blue-300 animate-scale-in delay-100"

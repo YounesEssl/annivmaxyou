@@ -71,7 +71,8 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(optio
       clearTimeout(safetyTimeout);
       observer.disconnect();
     };
-  }, []); // Plus de dépendances - fixe au mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Fixe au mount - les options sont stables
 
   return { ref, isVisible };
 }
