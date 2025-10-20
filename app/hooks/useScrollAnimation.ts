@@ -9,26 +9,48 @@ interface UseScrollAnimationOptions {
   delay?: number;
 }
 
-export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
+export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(options: UseScrollAnimationOptions = {}) {
   const {
-    threshold = 0.1,
-    rootMargin = '-50px',
+    threshold = 0.05,  // Plus bas pour déclencher plus tôt
+    rootMargin = '0px',  // Fixe, ne dépend plus de isMobile
     once = true,
     delay = 0
   } = options;
 
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element) {
+      // Fallback : si pas d'élément, afficher quand même
+      setIsVisible(true);
+      return;
+    }
+
+    // Si prefers-reduced-motion, afficher directement
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    // Timeout de sécurité : afficher après 2s si pas encore visible
+    const safetyTimeout = setTimeout(() => {
+      if (!isVisible) {
+        setIsVisible(true);
+      }
+    }, 2000);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          clearTimeout(safetyTimeout);
+
           if (delay > 0) {
-            setTimeout(() => setIsVisible(true), delay);
+            setTimeout(() => {
+              setIsVisible(true);
+            }, delay);
           } else {
             setIsVisible(true);
           }
@@ -46,9 +68,10 @@ export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
     observer.observe(element);
 
     return () => {
+      clearTimeout(safetyTimeout);
       observer.disconnect();
     };
-  }, [threshold, rootMargin, once, delay]);
+  }, []); // Plus de dépendances - fixe au mount
 
   return { ref, isVisible };
 }
@@ -56,7 +79,7 @@ export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
 // Hook pour détecter les préférences utilisateur
 export function useDeviceOptimizations() {
   const [optimizations, setOptimizations] = useState({
-    isMobile: false,
+    isMobile: typeof window !== 'undefined' ? window.innerWidth < 768 : false,
     reducedMotion: false,
     isLowPower: false
   });

@@ -29,14 +29,14 @@ export default function ActivitiesSection() {
           setIsInView(true);
         }
       },
-      { threshold: 0.2, rootMargin: isMobile ? '-50px' : '-100px' }
+      { threshold: 0.2 }
     );
 
     const element = document.getElementById('activities-section');
     if (element) observer.observe(element);
 
     return () => observer.disconnect();
-  }, [isMobile, isInView]);
+  }, [isInView]);
 
   useEffect(() => {
     if (!isInView || hasAnimated) return;
@@ -66,7 +66,7 @@ export default function ActivitiesSection() {
   return (
     <section
       id="activities-section"
-      className="min-h-screen bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
+      className="min-h-dvh bg-slate-900 flex items-center justify-center relative overflow-x-hidden mb-0"
       style={{ paddingTop: '10rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
     >
       {/* Orbes lumineux - animés uniquement sur desktop */}
@@ -75,7 +75,7 @@ export default function ActivitiesSection() {
       />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div className={`${isInView ? 'animate-fade-in-up' : 'opacity-0'} ${isMobile ? 'duration-600' : 'duration-1000'}`}>
+        <div className={`${isInView ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre qui se transforme */}
           <div className="relative flex items-center justify-center overflow-visible" style={{ minHeight: '600px', paddingTop: '2rem', paddingBottom: '2rem' }}>
             {!isInView || currentIndex === 0 ? (

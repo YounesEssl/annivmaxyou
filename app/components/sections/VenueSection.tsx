@@ -5,15 +5,13 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function VenueSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: isMobile ? '-50px' : '-100px' });
-  const { ref: textRef, isVisible: textVisible } = useScrollAnimation({ threshold: 0.2, delay: isMobile ? 100 : 200 });
-  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation({ threshold: 0.2, delay: isMobile ? 200 : 400 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="venue-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '8rem', paddingBottom: '20rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
+      style={{ paddingBottom: '20rem' }}
     >
       {/* Orbe lumineux - animé uniquement sur desktop */}
       <div
@@ -21,7 +19,7 @@ export default function VenueSection() {
       />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} ${isMobile ? 'duration-600' : 'duration-1000'}`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre */}
           <div style={{ marginBottom: '5rem' }}>
             <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 text-center transition-transform duration-300 hover:scale-105">
@@ -32,7 +30,7 @@ export default function VenueSection() {
           {/* Contenu texte + image */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             {/* Texte */}
-            <div ref={textRef as React.RefObject<HTMLDivElement>} className={`space-y-8 ${textVisible ? 'animate-fade-in-left' : 'opacity-0'} ${isMobile ? 'duration-500' : 'duration-800'} ${isMobile ? 'delay-100' : 'delay-200'}`}>
+            <div className="space-y-8 animate-fade-in-left delay-100">
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light">
                 À seulement{' '}
                 <span className="font-semibold relative inline-block">
@@ -59,7 +57,7 @@ export default function VenueSection() {
             </div>
 
             {/* Image */}
-            <div ref={imageRef as React.RefObject<HTMLDivElement>} className={`relative ${imageVisible ? 'animate-fade-in-right' : 'opacity-0'} ${isMobile ? 'duration-500' : 'duration-800'} ${isMobile ? 'delay-200' : 'delay-400'}`}>
+            <div className="relative animate-fade-in-right delay-200">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm border border-white/10">
                 <Image
                   src="/domaine.png"

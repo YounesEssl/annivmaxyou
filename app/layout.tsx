@@ -17,6 +17,12 @@ export const metadata: Metadata = {
   description: "On vous invite à célébrer notre anniversaire commun le week-end du 28 mars dans un lieu privatisé !",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

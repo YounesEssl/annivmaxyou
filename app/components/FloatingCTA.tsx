@@ -26,7 +26,7 @@ export default function FloatingCTA() {
       } ${!isMobile ? 'animate-float' : ''}`}
       style={{
         bottom: '2rem',
-        right: '2rem',
+        right: isMobile ? '1rem' : '2rem',
         animationDuration: '3s',
         animationTimingFunction: 'ease-in-out'
       }}

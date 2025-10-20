@@ -5,27 +5,19 @@ import Image from 'next/image';
 
 export default function AccommodationSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: repartitionRef, isVisible: repartitionVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: bigChaletsRef, isVisible: bigChaletsVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: duoChaletsRef, isVisible: duoChaletsVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: notesRef, isVisible: notesVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: conclusionRef, isVisible: conclusionVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="accommodation-section"
-      className="min-h-screen bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '10rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Orbes lumineux */}
       <div className={`orb orb-pulse absolute top-1/3 -left-32 sm:left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/12 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
       <div className={`orb orb-pulse absolute bottom-1/3 -right-32 sm:right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre */}
           <div style={{ marginBottom: '5rem' }}>
             <h2
@@ -38,10 +30,7 @@ export default function AccommodationSection() {
           {/* Grid: Image + Intro */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center" style={{ marginBottom: '7rem' }}>
             {/* Image à gauche */}
-            <div
-              ref={imageRef as React.RefObject<HTMLDivElement>}
-              className={`${imageVisible ? 'animate-fade-in-left' : 'opacity-0'} duration-800 delay-200 relative order-first`}
-            >
+            <div className="animate-fade-in-left delay-100 relative order-first">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm border border-white/10">
                 <Image
                   src="/chalets.png"
@@ -55,10 +44,7 @@ export default function AccommodationSection() {
             </div>
 
             {/* Texte intro à droite */}
-            <div
-              ref={introRef as React.RefObject<HTMLDivElement>}
-              className={`${introVisible ? 'animate-fade-in-right' : 'opacity-0'} duration-800 delay-400 space-y-8`}
-            >
+            <div className="animate-fade-in-right delay-200 space-y-8">
               <p className="text-xl sm:text-2xl md:text-3xl text-white leading-relaxed font-light">
                 On aura la chance de profiter de{' '}
                 <span className="font-semibold">15 chalets tout confort</span>, pouvant accueillir jusqu&apos;à{' '}
@@ -72,21 +58,14 @@ export default function AccommodationSection() {
           </div>
 
           {/* Répartition */}
-          <div
-            ref={repartitionRef as React.RefObject<HTMLDivElement>}
-            className={`${repartitionVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-500`}
-            style={{ marginBottom: '6rem' }}
-          >
+          <div className="animate-fade-in-up delay-300" style={{ marginBottom: '6rem' }}>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white text-center" style={{ marginBottom: '4rem' }}>
               Voici la répartition :
             </h3>
 
             <div className="space-y-10">
               {/* Grands chalets */}
-              <div
-                ref={bigChaletsRef as React.RefObject<HTMLDivElement>}
-                className={`${bigChaletsVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-600`}
-              >
+              <div className="animate-fade-in-up delay-400">
                 <div className="flex items-start gap-6 sm:gap-8">
                   <div className="flex-shrink-0" style={{ width: '100px', overflow: 'visible' }}>
                     <div
@@ -117,10 +96,7 @@ export default function AccommodationSection() {
               <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" style={{ margin: '3rem 0' }} />
 
               {/* Chalets duo */}
-              <div
-                ref={duoChaletsRef as React.RefObject<HTMLDivElement>}
-                className={`${duoChaletsVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-700`}
-              >
+              <div className="animate-fade-in-up delay-500">
                 <div className="flex items-start gap-6 sm:gap-8">
                   <div className="flex-shrink-0" style={{ width: '100px', overflow: 'visible' }}>
                     <div
@@ -150,11 +126,7 @@ export default function AccommodationSection() {
           </div>
 
           {/* Notes importantes */}
-          <div
-            ref={notesRef as React.RefObject<HTMLDivElement>}
-            className={`${notesVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-600 space-y-6`}
-            style={{ marginBottom: '6rem' }}
-          >
+          <div className="animate-fade-in-up delay-600 space-y-6" style={{ marginBottom: '6rem' }}>
             {/* Info couples */}
             <div className="flex items-start gap-4 sm:gap-6">
               <span className="text-3xl sm:text-4xl flex-shrink-0">🧡</span>
@@ -173,10 +145,7 @@ export default function AccommodationSection() {
           </div>
 
           {/* Conclusion */}
-          <div
-            ref={conclusionRef as React.RefObject<HTMLDivElement>}
-            className={`${conclusionVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-700 text-center`}
-          >
+          <div className="animate-fade-in-up delay-700 text-center">
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed font-light">
               Bref, <span className="font-semibold">personne ne dormira par terre</span>, et on a tout organisé pour que tout le monde soit à l&apos;aise tout le week-end !
             </p>

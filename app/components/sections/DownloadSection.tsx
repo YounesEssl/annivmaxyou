@@ -4,15 +4,12 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function DownloadSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: descriptionRef, isVisible: descriptionVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: buttonRef, isVisible: buttonVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="download-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-hidden"
-      style={{ paddingTop: '12rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -28,7 +25,7 @@ export default function DownloadSection() {
       <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre principal */}
           <div className="text-center" style={{ marginBottom: '3.5rem' }}>
             <h2
@@ -40,21 +37,14 @@ export default function DownloadSection() {
           </div>
 
           {/* Description */}
-          <div
-            ref={descriptionRef as React.RefObject<HTMLDivElement>}
-            className={`${descriptionVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 text-center`}
-            style={{ marginBottom: '3.5rem' }}
-          >
+          <div className="animate-fade-in-up delay-100 text-center" style={{ marginBottom: '3.5rem' }}>
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light">
               Télécharge toutes les infos pratiques dans un PDF : dates, lieu, prix, programme... tout ce qu&apos;il te faut pour ne rien oublier !
             </p>
           </div>
 
           {/* Bouton de téléchargement */}
-          <div
-            ref={buttonRef as React.RefObject<HTMLDivElement>}
-            className={`${buttonVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-300 text-center`}
-          >
+          <div className="animate-scale-in delay-200 text-center">
             <a
               href="/recap-anniv.pdf"
               download

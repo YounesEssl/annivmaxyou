@@ -4,14 +4,12 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function IntroSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: isMobile ? '-50px' : '-100px' });
-  const { ref: secondBlockRef, isVisible: secondBlockVisible } = useScrollAnimation({ threshold: 0.2, delay: isMobile ? 150 : 300 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="intro-section"
-      className="min-h-screen bg-slate-900 flex items-center justify-center py-20 sm:py-24 relative overflow-x-hidden"
-      style={{ paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Orbes lumineux - animés uniquement sur desktop */}
       <div
@@ -23,7 +21,7 @@ export default function IntroSection() {
       />
 
       <div className="w-full max-w-2xl sm:max-w-3xl mx-auto text-center relative z-10">
-        <div ref={contentRef as React.RefObject<HTMLDivElement>} className={`${contentVisible ? 'animate-fade-in-up' : 'opacity-0'} ${isMobile ? 'duration-600' : 'duration-1000'}`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Premier bloc de texte */}
           <div className="space-y-8" style={{ marginBottom: '6rem' }}>
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed font-light">
@@ -48,7 +46,7 @@ export default function IntroSection() {
           </div>
 
           {/* Deuxième bloc de texte */}
-          <div ref={secondBlockRef as React.RefObject<HTMLDivElement>} className={`space-y-6 ${secondBlockVisible ? 'animate-fade-in-up' : 'opacity-0'} ${isMobile ? 'duration-600' : 'duration-1000'}`}>
+          <div className="space-y-6 animate-fade-in-up delay-200">
             <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 leading-relaxed font-light">
               On a vu les choses{' '}
               <span className="font-semibold relative inline-block">

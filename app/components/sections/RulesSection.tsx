@@ -4,8 +4,7 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function RulesSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   const rules = [
     {
@@ -33,8 +32,7 @@ export default function RulesSection() {
   return (
     <section
       id="rules-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '12rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -50,7 +48,7 @@ export default function RulesSection() {
       <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
             <h2
@@ -63,11 +61,7 @@ export default function RulesSection() {
           </div>
 
           {/* Introduction */}
-          <div
-            ref={introRef as React.RefObject<HTMLDivElement>}
-            className={`${introVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-100 text-center`}
-            style={{ marginBottom: '6rem' }}
-          >
+          <div className="animate-fade-in-up delay-100 text-center" style={{ marginBottom: '6rem' }}>
             <p className="text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light">
               On part du principe que tout le monde est grand et responsable de soi.
               <br />
@@ -80,8 +74,8 @@ export default function RulesSection() {
             {rules.map((rule, index) => (
               <div
                 key={index}
-                className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}
-                style={{ marginBottom: '4rem', animationDelay: `${rule.delay * 1000}ms` }}
+                className="animate-fade-in-up delay-200"
+                style={{ marginBottom: '4rem' }}
               >
                 <div className="flex items-start gap-6 sm:gap-8">
                   <div className="flex-shrink-0">

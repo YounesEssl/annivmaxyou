@@ -4,15 +4,12 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function CTASection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: messageRef, isVisible: messageVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: buttonRef, isVisible: buttonVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="cta-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-hidden"
-      style={{ paddingTop: '8rem', paddingBottom: '8rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -27,21 +24,14 @@ export default function CTASection() {
       <div className={`orb orb-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] bg-purple-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-4xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000 text-center`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 text-center`}>
           {/* Message */}
-          <p
-            ref={messageRef as React.RefObject<HTMLParagraphElement>}
-            className={`${messageVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light`}
-            style={{ marginBottom: '3rem' }}
-          >
+          <p className="animate-fade-in-up delay-100 text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light" style={{ marginBottom: '3rem' }}>
             Si tu es prêt à t&apos;inscrire définitivement et à régler, tu peux tout de suite cliquer sur le bouton <span className="font-semibold text-white">S&apos;inscrire</span> et remplir le formulaire
           </p>
 
           {/* Bouton */}
-          <div
-            ref={buttonRef as React.RefObject<HTMLDivElement>}
-            className={`${buttonVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-400`}
-          >
+          <div className="animate-scale-in delay-200">
             <a
               href="https://tally.so/r/mZqRao"
               target="_blank"

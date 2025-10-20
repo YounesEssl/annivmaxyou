@@ -4,23 +4,12 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function PriceSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: priceRef, isVisible: priceVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: includesRef, isVisible: includesVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: card1Ref, isVisible: card1Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: card2Ref, isVisible: card2Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: card3Ref, isVisible: card3Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: card4Ref, isVisible: card4Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: card5Ref, isVisible: card5Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: dividerRef, isVisible: dividerVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: finalRef, isVisible: finalVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="price-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '12rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -36,7 +25,7 @@ export default function PriceSection() {
       <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '4rem', paddingBottom: '0.5rem' }}>
             <h2
@@ -48,22 +37,14 @@ export default function PriceSection() {
           </div>
 
           {/* Introduction */}
-          <div
-            ref={introRef as React.RefObject<HTMLDivElement>}
-            className={`${introVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 text-center`}
-            style={{ marginBottom: '3.5rem' }}
-          >
+          <div className="animate-fade-in-up delay-100 text-center" style={{ marginBottom: '3.5rem' }}>
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light">
               Pour que cet événement ait lieu dans ce lieu de rêve, avec tout ce qu&apos;il faut pour manger, boire et faire la fête, on a besoin que chacun mette un petit coup de pouce.
             </p>
           </div>
 
           {/* Prix principal - Hero */}
-          <div
-            ref={priceRef as React.RefObject<HTMLDivElement>}
-            className={`${priceVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-300 text-center`}
-            style={{ marginBottom: '4rem' }}
-          >
+          <div className="animate-scale-in delay-200 text-center" style={{ marginBottom: '4rem' }}>
             <p className="text-lg sm:text-xl md:text-2xl text-white/80 leading-relaxed font-light" style={{ marginBottom: '1.5rem' }}>
               Le tarif est de
             </p>
@@ -81,11 +62,7 @@ export default function PriceSection() {
           </div>
 
           {/* Ce que ça comprend */}
-          <div
-            ref={includesRef as React.RefObject<HTMLDivElement>}
-            className={`${includesVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-400`}
-            style={{ marginBottom: '4rem' }}
-          >
+          <div className="animate-fade-in-up delay-300" style={{ marginBottom: '4rem' }}>
             <h3
               className="text-center text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200"
               style={{ marginBottom: '4rem', paddingBottom: '0.5rem', lineHeight: '1.3' }}
@@ -97,8 +74,7 @@ export default function PriceSection() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
               {/* Carte 1 - 2 nuits */}
               <div
-                ref={card1Ref as React.RefObject<HTMLDivElement>}
-                className={`${card1Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-500 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
+                className="animate-fade-in-up delay-400 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.15) 100%)',
                 }}
@@ -114,8 +90,7 @@ export default function PriceSection() {
 
               {/* Carte 2 - Repas */}
               <div
-                ref={card2Ref as React.RefObject<HTMLDivElement>}
-                className={`${card2Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-600 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
+                className="animate-fade-in-up delay-500 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.15) 100%)',
                 }}
@@ -131,8 +106,7 @@ export default function PriceSection() {
 
               {/* Carte 3 - Cadre privatisé */}
               <div
-                ref={card3Ref as React.RefObject<HTMLDivElement>}
-                className={`${card3Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-700 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
+                className="animate-fade-in-up delay-600 relative overflow-hidden rounded-3xl p-1 min-h-[240px] backdrop-blur-sm transition-transform duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(139, 92, 246, 0.15) 100%)',
                 }}
@@ -148,8 +122,7 @@ export default function PriceSection() {
 
               {/* Carte 4 - ALCOOL (HERO - full width) */}
               <div
-                ref={card4Ref as React.RefObject<HTMLDivElement>}
-                className={`${card4Visible ? 'animate-scale-in' : 'opacity-0'} duration-700 delay-800 lg:col-span-2 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
+                className="animate-scale-in delay-700 lg:col-span-2 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm transition-transform duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, rgba(251, 146, 60, 0.15) 0%, rgba(234, 88, 12, 0.25) 50%, rgba(249, 115, 22, 0.15) 100%)',
                 }}
@@ -181,8 +154,7 @@ export default function PriceSection() {
 
               {/* Carte 5 - Week-end inoubliable */}
               <div
-                ref={card5Ref as React.RefObject<HTMLDivElement>}
-                className={`${card5Visible ? 'animate-fade-in-up' : 'opacity-0'} duration-600 delay-900 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm transition-transform duration-300 hover:scale-105`}
+                className="animate-fade-in-up delay-800 relative overflow-hidden rounded-3xl p-1 min-h-[300px] backdrop-blur-sm transition-transform duration-300 hover:scale-105"
                 style={{
                   background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.15) 100%)',
                 }}
@@ -204,19 +176,12 @@ export default function PriceSection() {
           </div>
 
           {/* Divider */}
-          <div
-            ref={dividerRef as React.RefObject<HTMLDivElement>}
-            className={`${dividerVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-900`}
-            style={{ marginBottom: '4rem' }}
-          >
+          <div className="animate-scale-in delay-900" style={{ marginBottom: '4rem' }}>
             <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
 
           {/* Message final */}
-          <div
-            ref={finalRef as React.RefObject<HTMLDivElement>}
-            className={`${finalVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-1000 text-center`}
-          >
+          <div className="animate-fade-in-up delay-1000 text-center">
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light">
               Franchement, on ne fait pas ça tous les ans, c&apos;est peut-être même une fois dans une vie, alors on espère que vous serez au rendez-vous 🔥
             </p>

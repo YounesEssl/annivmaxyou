@@ -4,22 +4,12 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function FoodSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: introRef, isVisible: introVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: solutionRef, isVisible: solutionVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: divider1Ref, isVisible: divider1Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: announcementRef, isVisible: announcementVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: detailsRef, isVisible: detailsVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: divider2Ref, isVisible: divider2Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: fridayRef, isVisible: fridayVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: divider3Ref, isVisible: divider3Visible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: allergiesRef, isVisible: allergiesVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="food-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '12rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -35,7 +25,7 @@ export default function FoodSection() {
       <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
             <h2
@@ -47,8 +37,7 @@ export default function FoodSection() {
 
           {/* Introduction */}
           <div
-            ref={introRef as React.RefObject<HTMLDivElement>}
-            className={`${introVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-200 space-y-8`}
+            className="animate-fade-in-up delay-100 space-y-8"
             style={{ marginBottom: '6rem' }}
           >
             <p className="text-xl sm:text-2xl md:text-3xl text-white/90 leading-relaxed font-light text-center">
@@ -62,8 +51,7 @@ export default function FoodSection() {
 
           {/* Solution - Hero */}
           <div
-            ref={solutionRef as React.RefObject<HTMLDivElement>}
-            className={`${solutionVisible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-400 text-center`}
+            className="animate-scale-in delay-200 text-center"
             style={{ marginBottom: '8rem' }}
           >
             <h3
@@ -77,8 +65,7 @@ export default function FoodSection() {
 
           {/* Divider créatif 1 */}
           <div
-            ref={divider1Ref as React.RefObject<HTMLDivElement>}
-            className={`${divider1Visible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-500`}
+            className="animate-scale-in delay-300"
             style={{ marginBottom: '8rem' }}
           >
             <div className="flex items-center justify-center gap-3">
@@ -94,8 +81,7 @@ export default function FoodSection() {
 
           {/* Annonce officielle */}
           <div
-            ref={announcementRef as React.RefObject<HTMLDivElement>}
-            className={`${announcementVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-600 text-center`}
+            className="animate-fade-in-up delay-400 text-center"
             style={{ marginBottom: '6rem' }}
           >
             <p className="text-2xl sm:text-3xl md:text-4xl text-white font-semibold leading-relaxed">
@@ -105,8 +91,7 @@ export default function FoodSection() {
 
           {/* Détails */}
           <div
-            ref={detailsRef as React.RefObject<HTMLDivElement>}
-            className={`${detailsVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-700 space-y-10`}
+            className="animate-fade-in-up delay-500 space-y-10"
             style={{ marginBottom: '10rem' }}
           >
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light text-center">
@@ -124,8 +109,7 @@ export default function FoodSection() {
 
           {/* Divider créatif 2 */}
           <div
-            ref={divider2Ref as React.RefObject<HTMLDivElement>}
-            className={`${divider2Visible ? 'animate-scale-in' : 'opacity-0'} duration-800 delay-800`}
+            className="animate-scale-in delay-600"
             style={{ marginBottom: '10rem' }}
           >
             <div className="relative flex items-center justify-center">
@@ -144,8 +128,7 @@ export default function FoodSection() {
 
           {/* Vendredi soir */}
           <div
-            ref={fridayRef as React.RefObject<HTMLDivElement>}
-            className={`${fridayVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-900 space-y-10`}
+            className="animate-fade-in-up delay-700 space-y-10"
             style={{ marginBottom: '10rem' }}
           >
             <div className="text-center space-y-6">
@@ -175,8 +158,7 @@ export default function FoodSection() {
 
           {/* Divider créatif 3 */}
           <div
-            ref={divider3Ref as React.RefObject<HTMLDivElement>}
-            className={`${divider3Visible ? 'opacity-100' : 'opacity-0'} duration-800 delay-1000`}
+            className="opacity-100 delay-800"
             style={{ marginBottom: '8rem' }}
           >
             <div className="flex items-center justify-center gap-4">
@@ -188,8 +170,7 @@ export default function FoodSection() {
 
           {/* Allergies */}
           <div
-            ref={allergiesRef as React.RefObject<HTMLDivElement>}
-            className={`${allergiesVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-800 delay-1100 relative`}
+            className="animate-fade-in-up delay-900 relative"
           >
             <div className="border-l-4 border-purple-400/50 bg-purple-900/10 backdrop-blur-sm rounded-r-2xl" style={{ padding: '3rem 2.5rem' }}>
               <div className="space-y-6">

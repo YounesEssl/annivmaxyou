@@ -5,15 +5,12 @@ import Image from 'next/image';
 
 export default function TransportSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: textRef, isVisible: textVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="transport-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '12rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -29,7 +26,7 @@ export default function TransportSection() {
       <div className={`orb orb-pulse absolute bottom-1/3 left-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-purple-500/8 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
             <h2
@@ -42,10 +39,7 @@ export default function TransportSection() {
           {/* Layout horizontal inversé: Texte + Image */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center" style={{ marginBottom: '8rem' }}>
             {/* Contenu texte à gauche */}
-            <div
-              ref={textRef as React.RefObject<HTMLDivElement>}
-              className={`${textVisible ? 'animate-fade-in-left' : 'opacity-0'} duration-800 delay-200 space-y-10 order-2 lg:order-1`}
-            >
+            <div className="animate-fade-in-left delay-100 space-y-10 order-2 lg:order-1">
               {/* Localisation */}
               <div className="space-y-6">
                 <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed font-light">
@@ -78,10 +72,7 @@ export default function TransportSection() {
             </div>
 
             {/* Image à droite */}
-            <div
-              ref={imageRef as React.RefObject<HTMLDivElement>}
-              className={`${imageVisible ? 'animate-fade-in-right' : 'opacity-0'} duration-800 delay-400 relative order-1 lg:order-2`}
-            >
+            <div className="animate-fade-in-right delay-200 relative order-1 lg:order-2">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm border border-white/10">
                 <Image
                   src="/parking.png"

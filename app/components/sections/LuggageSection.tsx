@@ -4,15 +4,12 @@ import { useScrollAnimation, useDeviceOptimizations } from '@/app/hooks/useScrol
 
 export default function LuggageSection() {
   const { isMobile } = useDeviceOptimizations();
-  const { ref: mainRef, isVisible: mainVisible } = useScrollAnimation({ threshold: 0.2, rootMargin: '-100px' });
-  const { ref: iconRef, isVisible: iconVisible } = useScrollAnimation({ threshold: 0.2 });
-  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
       id="luggage-section"
-      className="bg-slate-900 flex items-center justify-center relative overflow-x-hidden"
-      style={{ paddingTop: '12rem', paddingBottom: '10rem', paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+      className="min-h-dvh bg-slate-900 flex items-center justify-center py-20 sm:py-24 px-6 sm:px-10 relative overflow-x-hidden mb-0"
     >
       {/* Dégradé de transition ultra doux du haut */}
       <div
@@ -28,7 +25,7 @@ export default function LuggageSection() {
       <div className={`orb orb-pulse absolute bottom-1/4 right-1/4 w-80 h-80 sm:w-96 sm:h-96 lg:w-[500px] lg:h-[500px] bg-blue-500/10 rounded-full ${isMobile ? 'blur-xl' : 'blur-3xl'} pointer-events-none`} />
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        <div ref={mainRef as React.RefObject<HTMLDivElement>} className={`${mainVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-1000`}>
+        <div ref={ref} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'} duration-600`}>
           {/* Titre principal */}
           <div style={{ marginBottom: '8rem' }}>
             <h2
@@ -41,10 +38,7 @@ export default function LuggageSection() {
           {/* Layout horizontal: Icône + Contenu */}
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12 lg:gap-16 items-start">
             {/* Grosse icône valise à gauche */}
-            <div
-              ref={iconRef as React.RefObject<HTMLDivElement>}
-              className={`${iconVisible ? 'animate-fade-in-left' : 'opacity-0'} duration-800 delay-200 flex justify-center lg:justify-start`}
-            >
+            <div className="animate-fade-in-left delay-100 flex justify-center lg:justify-start">
               <div className={`${!isMobile ? 'animate-float' : ''}`}>
                 <svg
                   className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64"
@@ -89,10 +83,7 @@ export default function LuggageSection() {
             </div>
 
             {/* Contenu texte à droite */}
-            <div
-              ref={contentRef as React.RefObject<HTMLDivElement>}
-              className={`${contentVisible ? 'animate-fade-in-right' : 'opacity-0'} duration-800 delay-300 space-y-10`}
-            >
+            <div className="animate-fade-in-right delay-200 space-y-10">
               {/* Soirée du samedi */}
               <div className="space-y-6">
                 <p className="text-xl sm:text-2xl md:text-3xl text-white font-semibold leading-relaxed">

@@ -93,7 +93,7 @@ export default function HeroSection() {
   }, [isMounted, isMobile, typingSpeed, erasingSpeed]);
 
   return (
-    <main className="h-screen w-full bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-x-hidden overflow-y-hidden">
+    <main className="h-dvh w-full bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center px-6 sm:px-8 lg:px-10 relative overflow-x-hidden overflow-y-hidden">
       {/* Particules flottantes en arrière-plan - Desktop uniquement */}
       {isMounted && particles.length > 0 && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -148,7 +148,7 @@ export default function HeroSection() {
       {/* Flèche scroll - Position absolue en bas */}
       {showButton && (
         <div
-          className={`animate-fade-in-up absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer z-20 transition-transform hover:translate-y-1 ${isMobile ? 'duration-300' : 'duration-600'}`}
+          className={`animate-fade-in-up absolute bottom-12 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer z-20 transition-transform hover:translate-y-1 ${isMobile ? 'duration-300' : 'duration-600'}`}
           onClick={() => {
             const nextSection = document.getElementById('intro-section');
             nextSection?.scrollIntoView({ behavior: 'smooth' });
