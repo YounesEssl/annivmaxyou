@@ -8,7 +8,7 @@ export default function DrinkSection() {
   const { ref, isVisible } = useScrollAnimation();
 
   const alcoholItems = [
-    { name: '60L de bière', delay: 0.2 },
+    { name: '100L de bière', delay: 0.2 },
     { name: 'Vin rouge & blanc', delay: 0.3 },
     { name: 'Vodka, rhum, gin, JET 27, Jäger…', delay: 0.4 },
     { name: 'Champagne', delay: 0.5 },
